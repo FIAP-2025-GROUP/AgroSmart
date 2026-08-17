@@ -1,0 +1,22 @@
+# AgroSmart - Fase 1 (inferência local)
+# Instalação: py -3.12 -m pip install -r requirements.txt
+#
+# O treino roda no Google Colab (ver notebooks/treino_agrosmart.ipynb) e não
+# precisa de nada daqui. Estas dependências servem apenas para carregar o
+# modelo já treinado e rodar o app.
+#
+# No Windows o TensorFlow é CPU-only desde a versão 2.11 — irrelevante aqui,
+# porque a inferência do MobileNetV2 em CPU leva cerca de 100 ms por imagem.
+# Se a instalação do pacote abaixo falhar, troque por: tensorflow-cpu>=2.16,<3.0
+
+tensorflow>=2.16,<3.0
+streamlit>=1.49,<2.0   # width="stretch" substituiu use_container_width a partir da 1.49
+pillow>=10.0
+pandas>=2.0
+numpy>=1.26
+
+# Motor de visão generalista (Google Gemini). A chave da camada gratuita sai de
+# https://aistudio.google.com/apikey e vai na variável GEMINI_API_KEY.
+google-genai>=1.0
+pydantic>=2.0
+python-dotenv>=1.0

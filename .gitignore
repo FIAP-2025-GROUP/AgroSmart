@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Segredos. NUNCA versione o .env nem o inclua no .zip da entrega —
+# o modelo sem valores reais é o .env.example, esse sim vai versionado.
+.env
+.env.local
+
+# Resultados gerados em execução — o .zip da entrega leva apenas um exemplo,
+# adicionado manualmente.
+exportacoes/*.csv
+exportacoes/*.json
+
+# Histórico local de laudos. Pode conter fotos suas; gere um novo em vez de
+# versionar este.
+dados/historico.db
+
+# O modelo treinado (~14 MB) É versionado de propósito: sem ele o avaliador
+# não consegue rodar o app. Não adicione modelo/ aqui.

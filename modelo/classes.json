@@ -1,0 +1,24 @@
+{
+  "versao_catalogo": "1.0.0",
+  "arquitetura": "MobileNetV2 (STUB — pesos do topo aleatórios)",
+  "tamanho_entrada": [
+    224,
+    224
+  ],
+  "treinado_em": "2026-08-14T23:28:09",
+  "acuracia_teste": null,
+  "ids": [
+    "apple_healthy",
+    "apple_scab",
+    "corn_healthy",
+    "corn_common_rust",
+    "grape_healthy",
+    "grape_black_rot",
+    "potato_healthy",
+    "potato_early_blight",
+    "tomato_healthy",
+    "tomato_late_blight",
+    "tomato_septoria",
+    "tomato_spider_mites"
+  ]
+}

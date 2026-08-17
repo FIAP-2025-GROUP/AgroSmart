@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agrosmart",
+      "runtimeExecutable": ".venv\\Scripts\\python.exe",
+      "runtimeArgs": ["servidor.py", "--porta", "8081"],
+      "port": 8081
+    },
+    {
+      "name": "agrosmart-streamlit",
+      "runtimeExecutable": ".venv\\Scripts\\streamlit.exe",
+      "runtimeArgs": [
+        "run",
+        "app.py",
+        "--server.port",
+        "8501",
+        "--server.headless",
+        "true",
+        "--browser.gatherUsageStats",
+        "false"
+      ],
+      "port": 8501
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroSmart — Diagnóstico de Plantas</title>
+<link rel="stylesheet" href="/web/estilo.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+
+<div class="brilhos" aria-hidden="true">
+  <span class="orbe orbe-a"></span>
+  <span class="orbe orbe-b"></span>
+  <span class="orbe orbe-c"></span>
+</div>
+
+<header class="navegacao vidro">
+  <a class="marca" href="/">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 21c0-7 4-11 9-12 0 8-4 12-9 12Z" fill="url(#folha)"/>
+      <path d="M12 21C8 21 3 18 3 11c5 0 9 3 9 10Z" fill="url(#folha)" opacity=".62"/>
+      <defs><linearGradient id="folha" x1="3" y1="4" x2="21" y2="21">
+        <stop stop-color="#d7f56b"/><stop offset="1" stop-color="#37a05a"/>
+      </linearGradient></defs>
+    </svg>
+    <span>Agro<b>Smart</b></span>
+  </a>
+
+  <nav class="links">
+    <a href="#diagnostico" class="ativo">Diagnóstico</a>
+    <a href="#historico">Histórico</a>
+    <a href="#classes">Culturas</a>
+  </nav>
+
+  <div class="estado-motores" id="estado-motores">
+    <span class="pastilha" id="estado-cnn"><i></i>CNN</span>
+    <span class="pastilha" id="estado-vlm"><i></i>IA visual</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="heroi" id="diagnostico">
+    <div class="heroi-texto">
+      <p class="chamada">✦ Visão computacional aplicada ao campo</p>
+      <h1>Diagnóstico<br><em>Inteligente</em></h1>
+      <p class="subtitulo">Uma foto basta para saber se a planta está saudável — e o que fazer se não estiver.</p>
+
+      <dl class="numeros">
+        <div><dt id="num-total">0</dt><dd>laudos emitidos</dd></div>
+        <div><dt>12</dt><dd>doenças treinadas</dd></div>
+        <div><dt>∞</dt><dd>espécies via IA visual</dd></div>
+      </dl>
+    </div>
+
+    <div class="heroi-acao">
+      <div class="modos" id="modos" role="radiogroup" aria-label="Motor de diagnóstico"></div>
+
+      <div class="zona vidro" id="zona" tabindex="0" role="button"
+           aria-label="Arraste uma imagem ou clique para escolher">
+        <input type="file" id="entrada" accept="image/png,image/jpeg" hidden>
+
+        <div class="zona-vazia" id="zona-vazia">
+          <div class="icone-envio">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <path d="m7 9 5-5 5 5"/><path d="M12 4v12"/>
+            </svg>
+          </div>
+          <h2>Arraste a foto da planta</h2>
+          <p>ou clique para escolher uma imagem</p>
+          <span class="formatos">PNG ou JPEG · uma imagem por vez</span>
+        </div>
+
+        <div class="zona-previa" id="zona-previa" hidden>
+          <div class="moldura" id="moldura-previa">
+            <img id="previa" alt="Pré-visualização da imagem enviada">
+          </div>
+          <div class="previa-info">
+            <strong id="previa-nome"></strong>
+            <button type="button" class="botao-limpar" id="trocar">Trocar imagem</button>
+            <button type="button" class="botao-limpar" id="limpar-zona">Limpar</button>
+          </div>
+        </div>
+
+        <div class="zona-carregando" id="zona-carregando" hidden>
+          <div class="scanner moldura" id="scanner">
+            <img id="previa-scan" alt="">
+            <span class="scan-grade" aria-hidden="true"></span>
+            <span class="scan-linha" aria-hidden="true"></span>
+            <span class="scan-cantos" aria-hidden="true"></span>
+          </div>
+          <p id="texto-carregando" role="status">Analisando…</p>
+          <div class="barra-indeterminada" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+
+      <p class="dica" id="dica">Enquadre a folha ou o ramo afetado, com boa iluminação e fundo limpo.</p>
+    </div>
+  </section>
+
+  <section class="laudo vidro" id="laudo" hidden></section>
+
+  <section class="historico" id="historico">
+    <header class="historico-topo">
+      <div>
+        <h2>Histórico</h2>
+        <p id="historico-resumo">Nenhuma análise salva ainda.</p>
+      </div>
+      <div class="acoes">
+        <a class="botao" href="/api/exportar/csv">Exportar CSV</a>
+        <a class="botao" href="/api/exportar/json">Exportar JSON</a>
+        <button class="botao perigo" id="limpar-tudo" type="button">Limpar</button>
+      </div>
+    </header>
+    <div class="grade" id="grade-historico"></div>
+  </section>
+
+  <section class="classes vidro" id="classes">
+    <h2>Culturas que o modelo treinado reconhece</h2>
+    <p>Fora desta lista o diagnóstico fica por conta da IA visual, que aceita qualquer espécie.</p>
+    <div class="grade-classes" id="grade-classes"></div>
+  </section>
+
+</main>
+
+<footer class="rodape">
+  <p>AgroSmart · Fase 1 — protótipo acadêmico de visão computacional.
+     Os laudos são <strong>triagem</strong>, não parecer técnico:
+     aplicação de defensivo exige engenheiro agrônomo.</p>
+</footer>
+
+<div class="aviso-flutuante" id="aviso" hidden></div>
+
+<script src="/web/app.js"></script>
+</body>
+</html>
