@@ -2,6 +2,14 @@
 __pycache__/
 *.pyc
 
+# Lixo de editor e de sistema. O `~$...` é o arquivo de trava que o Word cria
+# enquanto o .docx está aberto — some sozinho ao fechar, mas se for commitado
+# fica no repositório para sempre.
+~$*
+*.tmp
+Thumbs.db
+.DS_Store
+
 # Segredos. NUNCA versione o .env nem o inclua no .zip da entrega —
 # o modelo sem valores reais é o .env.example, esse sim vai versionado.
 .env
