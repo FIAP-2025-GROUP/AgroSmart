@@ -1,12 +1,12 @@
 {
   "versao_catalogo": "1.0.0",
-  "arquitetura": "MobileNetV2 (STUB — pesos do topo aleatórios)",
+  "arquitetura": "MobileNetV2",
   "tamanho_entrada": [
     224,
     224
   ],
-  "treinado_em": "2026-08-14T23:28:09",
-  "acuracia_teste": null,
+  "treinado_em": "2026-08-22T15:47:27",
+  "acuracia_teste": 0.9707,
   "ids": [
     "apple_healthy",
     "apple_scab",
