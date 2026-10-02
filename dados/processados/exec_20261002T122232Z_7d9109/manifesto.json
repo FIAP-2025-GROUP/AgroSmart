@@ -1,0 +1,40 @@
+{
+  "tipo": "pacote_processado",
+  "versao_schema": "2.0.0",
+  "versao_normalizacao": "1.0.0",
+  "id_execucao": "exec_20261002T122232Z_7d9109",
+  "publicado_em": "2026-10-02T12:25:50Z",
+  "processado_em": "2026-10-02T12:22:32Z",
+  "por_origem": {
+    "simulado": {
+      "analises": 1157,
+      "laudos": 1311
+    }
+  },
+  "ambiente": "databricks",
+  "versao_spark": "4.2.0",
+  "id_snapshot": "snap_20261002T122119Z_a9fd41",
+  "snapshot_extraido_em": "2026-10-02T12:21:19Z",
+  "registros_raw_por_origem": {
+    "simulado": 1321
+  },
+  "arquivos": {
+    "analises.jsonl": {
+      "sha256": "a71028f9bfb9f6be0b5e6ef63bda0d1229b018f6b05a1db4e1b05c979a738146",
+      "linhas": 1157
+    },
+    "laudos.jsonl": {
+      "sha256": "29e8959e6ae0e8ac8a478829493103bee8d11c4d4b1f537fe3d7e0b89cc0f155",
+      "linhas": 1311
+    },
+    "agregados.jsonl": {
+      "sha256": "dc6b837f4b544f10eff98611e0c22b701d2ed94cbc017fb572b2de6c15807e47",
+      "linhas": 201
+    },
+    "qualidade.json": {
+      "sha256": "34ebc7bc3bdf230b478237a8a092bd4fb2e0aa0b554bfe18f58b888f34a4c8e2",
+      "linhas": null
+    }
+  },
+  "status": "completo"
+}

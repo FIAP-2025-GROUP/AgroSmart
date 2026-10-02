@@ -103,6 +103,30 @@ alimenta a tabela comparativa do relatório.
 
 ---
 
+## Fase 2 — Painel analítico
+
+O AgroSmart ganhou uma camada analítica: um pipeline **PySpark** (RAW → Bronze → Silver → Gold), que
+roda localmente ou no **Databricks Free Edition**, e um **painel interativo** em
+<http://localhost:8000/dashboard> (menu "Painel analítico"). Análises reais feitas na tela principal
+aparecem no painel na hora (botão **Ver no painel**), lidas direto do SQLite; os dados simulados vêm
+do pacote processado pelo pipeline. O painel não precisa de Spark nem de Java, e o diagnóstico da
+Fase 1 continua igual.
+
+```bash
+.venv\Scripts\python.exe -m pip install -r requirements-spark.txt   # pipeline local (Java 17 em JAVA_HOME)
+.venv\Scripts\python.exe ferramentas\gerar_dados_simulados.py       # dados de demonstração
+.venv\Scripts\python.exe ferramentas\executar_pipeline.py           # RAW → Gold → pacote
+.venv\Scripts\python.exe servidor.py                                 # abra /dashboard
+.venv\Scripts\python.exe -m pytest                                   # testes (requirements-dev.txt)
+```
+
+Os dados **simulados** servem para demonstração e aparecem sempre identificados como tal. Detalhes
+em [docs/fase2_arquitetura.md](docs/fase2_arquitetura.md),
+[docs/fase2_dados_e_execucao.md](docs/fase2_dados_e_execucao.md) e
+[docs/fase2_roteiro_video.md](docs/fase2_roteiro_video.md).
+
+---
+
 ## Treinar o modelo CNN
 
 O treino roda no **Google Colab** com GPU gratuita — não precisa de nada
@@ -189,8 +213,19 @@ notebooks/                Notebook de treino (Colab)
 modelo/                   Modelo treinado + classes.json
 dados/exemplos/           Amostras do PlantVillage
 dados/campo/              Fotos reais de celular
-docs/                     Gráficos e métricas gerados no treino
+docs/                     Gráficos e métricas gerados no treino + documentação da Fase 2
 exportacoes/              Saída do CSV e do JSON
+
+# Fase 2
+src/analitica.py          Leitura do pacote processado para o painel (sem Spark)
+src/pipeline/             Contrato, ingestão, normalização, transformações Spark, pacote
+web/dashboard.*           Painel analítico (/dashboard)
+ferramentas/              gerar_dados_simulados · exportar_snapshot · executar_pipeline · importar_processados
+notebooks/pipeline_fase2_databricks.ipynb   Pipeline no Databricks (Delta)
+dados/simulados/          Dados de demonstração (semente fixa)
+dados/raw|bronze|silver|gold/   Camadas geradas (fora do Git)
+dados/processados/        Pacotes publicados para o painel (ATUAL.json aponta o vigente)
+testes/                   pytest: ingestão, pipeline Spark, API analítica
 ```
 
 `src/rotulos.py` define a ordem dos índices de saída da rede. O app compara essa

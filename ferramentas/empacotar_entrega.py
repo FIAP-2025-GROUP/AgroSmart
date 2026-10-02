@@ -1,156 +1,228 @@
-"""Monta o .zip da entrega.
+"""Monta o .zip da entrega acadêmica (Fase 2).
 
-    py -3.12 ferramentas/empacotar_entrega.py
+    .venv\\Scripts\\python.exe ferramentas\\empacotar_entrega.py
+    .venv\\Scripts\\python.exe ferramentas\\empacotar_entrega.py --saida C:\\temp\\teste.zip
 
-O pacote é organizado para que o avaliador veja os quatro itens da rubrica na
-primeira tela, sem precisar navegar:
+Estrutura do pacote:
 
-    paulo_..._fase1_atividade.docx    relatório técnico (15%)
-    LINK_DO_VIDEO.txt                 vídeo (15%)
-    exportacoes/                      exportação estruturada (20%)
-    projeto/                          protótipo funcional (50%)
-    LEIA-ME.txt                       mapa do pacote
+    LEIA-ME.txt          mapa do pacote e como executar
+    LINK_DO_VIDEO.txt    endereço do vídeo (preencher)
+    projeto/             código, painel, notebook, documentação, testes, gerador,
+                         dados simulados e UM pacote processado só com dados simulados
 
-O `.env` NUNCA entra: ele carrega a chave real do Gemini e ficaria legível
-para quem receber o arquivo. Só o `.env.example`, sem valor real, é embarcado.
+O que NUNCA entra, por motivo:
+
+* segredos — `.env`, `.env.*` (exceto `.env.example`);
+* dados operacionais ou privados — `historico.db` e qualquer SQLite/banco
+  auxiliar, `dados/campo/` (fotos reais), snapshots RAW e camadas
+  Bronze/Silver/Gold intermediárias, exportações do pipeline;
+* pacotes processados que não sejam exclusivamente simulados;
+* caches e temporários — `.venv`, `__pycache__`, `.pytest_cache`, `.tmp_*`,
+  arquivos de trava do Word, `.zip` antigos.
+
+O pacote processado embarcado é o apontado por `dados/processados/ATUAL.json`.
+Ele precisa passar na validação completa e conter apenas `origem_dado =
+"simulado"`; se não, o empacotamento é recusado. Gere-o antes com:
+
+    .venv\\Scripts\\python.exe ferramentas\\executar_pipeline.py --origem simulado
 """
 
 from __future__ import annotations
 
+import argparse
+import json
+import sys
 import zipfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-DESTINO = RAIZ / "entrega"
-RELATORIO = RAIZ / "relatorio" / "paulo_sergio_morais_RM553012_3ESOR_fase1_atividade.docx"
+sys.path.insert(0, str(RAIZ))
 
-# Pastas e arquivos que não vão no pacote, por motivo.
+from src.pipeline import contratos as c  # noqa: E402
+from src.pipeline import pacote  # noqa: E402
+
+DESTINO_PADRAO = RAIZ / "entrega" / "paulo_sergio_morais_RM553012_3ESOR_fase2_atividade.zip"
+
+# Pastas (em qualquer nível) que não vão no pacote.
 PASTAS_FORA = {
-    ".venv",            # ambiente local, ~800 MB
-    "__pycache__",
-    ".git",
-    ".claude",
-    "entrega",          # o próprio destino
-    "exportacoes",      # vai na raiz do pacote; a pasta é recriada na execução
+    ".venv", "__pycache__", ".pytest_cache", ".git", ".claude", ".idea", ".vscode",
+    "entrega",          # o próprio destino e as entregas anteriores
+    "exportacoes",      # saídas geradas pelo app
     "node_modules",
 }
-ARQUIVOS_FORA = {
-    ".env",             # SEGREDO: chave real do Gemini
-    ".env.local",
-    "historico.db",     # pode conter fotos pessoais; o app gera um novo vazio
-}
-SUFIXOS_FORA = {".pyc", ".zip", ".pdf"}
+# Caminhos relativos (a partir da raiz) que não vão, nem o que houver dentro.
+PREFIXOS_FORA = (
+    "dados/raw/", "dados/bronze/", "dados/silver/", "dados/gold/", "dados/exportacoes/",
+    "dados/campo/",       # fotos reais de celular
+    "dados/processados/",  # entra só o pacote simulado validado, tratado à parte
+)
+ARQUIVOS_FORA = {".env", ".env.local", "historico.db", "Thumbs.db", ".DS_Store"}
+SUFIXOS_FORA = {".pyc", ".zip", ".pdf", ".db", ".sqlite", ".sqlite3", ".db-journal",
+                ".db-wal", ".db-shm", ".tmp", ".log"}
 
 AVISO_VIDEO = """\
-VÍDEO DA APLICAÇÃO — AgroSmart
+VÍDEO DA APLICAÇÃO — AgroSmart · Fase 2
 Paulo Sergio Morais · RM 553012 · 3ESOR
 
 Link: «COLE AQUI O LINK DO VÍDEO»
 
-Duração: até 5 minutos.
-Sugestão de roteiro:
-  0:00  O problema — diagnóstico no campo demora dias para chegar ao agrônomo
-  0:30  A solução em dois motores e por que dois
-  1:15  Demonstração: foto de folha doente, laudo completo na tela
-  2:30  Foto ruim de propósito: o sistema recusa o diagnóstico e diz o que falta
-  3:15  Histórico e exportação em CSV e JSON abertos no Excel
-  4:15  Aplicabilidade no agronegócio e limitações
+Roteiro e números usados: projeto/docs/fase2_roteiro_video.md
 """
 
 
-def _mapa_do_pacote(nome_relatorio: str) -> str:
+def _mapa_do_pacote(id_execucao: str) -> str:
     return f"""\
 ENTREGA — AgroSmart
 Paulo Sergio Morais · RM 553012 · 3ESOR
-Fase 1 — Atividade de visão computacional
+Fase 2 — Painel analítico, pipeline Spark e Databricks
 
-CONTEÚDO DESTE PACOTE
----------------------
-{nome_relatorio}
-    Relatório técnico completo (11 páginas): processo de desenvolvimento,
-    tecnologias, imagens de exemplo com laudos reais e aplicabilidade no
-    agronegócio.
+CONTEÚDO
+--------
+LINK_DO_VIDEO.txt    endereço do vídeo de apresentação
+projeto/             código-fonte completo
 
-LINK_DO_VIDEO.txt
-    Endereço do vídeo de apresentação.
+  projeto/web/dashboard.*                     painel analítico (/dashboard)
+  projeto/src/pipeline/, projeto/src/analitica.py   pipeline e API analítica
+  projeto/notebooks/pipeline_fase2_databricks.ipynb notebook do Databricks
+  projeto/docs/fase2_*.md                     arquitetura, dados/execução, roteiro do vídeo
+  projeto/testes/                             testes automatizados (pytest)
+  projeto/dados/simulados/                    dados de demonstração (semente fixa)
+  projeto/dados/processados/{id_execucao}/
+                                              pacote processado pronto para o painel
 
-exportacoes/
-    Resultados exportados pelo sistema em CSV e JSON, 17 campos por laudo.
-    O CSV usa separador ';' e encoding utf-8-sig — abre direto no Excel em
-    português, com as colunas separadas e os acentos corretos.
+DADOS
+-----
+O painel abre com dados SIMULADOS, identificados como tal na tela. Eles não
+representam a situação de nenhuma lavoura. Nenhum dado operacional real
+(histórico SQLite, fotos, snapshots) acompanha este pacote.
 
-projeto/
-    Código-fonte completo do protótipo. Para executar, veja projeto/README.md.
-    Resumo:  py -3.12 -m venv .venv
-             .venv\\Scripts\\python.exe -m pip install -r requirements.txt
-             copy .env.example .env      (e cole a chave gratuita do Gemini)
-             .venv\\Scripts\\python.exe servidor.py
-    Depois abra http://localhost:8000 e arraste a foto de uma planta.
+COMO EXECUTAR (Windows)
+-----------------------
+  cd projeto
+  py -3.12 -m venv .venv
+  .venv\\Scripts\\python.exe -m pip install -r requirements.txt
+  .venv\\Scripts\\python.exe servidor.py
+  -> http://localhost:8000            diagnóstico (Fase 1)
+  -> http://localhost:8000/dashboard  painel analítico (Fase 2)
 
-OBSERVAÇÃO SOBRE A CHAVE DE API
--------------------------------
-O arquivo .env com a chave pessoal do Gemini NÃO acompanha este pacote, por
-segurança. O modelo sem valor real (.env.example) está em projeto/. A chave
-gratuita é obtida em https://aistudio.google.com/apikey, sem cartão de crédito.
-Sem chave, o motor CNN continua funcionando normalmente.
+O painel não precisa de Java nem de Spark. Para reprocessar os dados:
+  .venv\\Scripts\\python.exe -m pip install -r requirements-spark.txt   (Java 17 em JAVA_HOME)
+  .venv\\Scripts\\python.exe ferramentas\\executar_pipeline.py --origem simulado
+Testes: .venv\\Scripts\\python.exe -m pip install -r requirements-dev.txt
+        .venv\\Scripts\\python.exe -m pytest
+
+A chave do Gemini (.env) NÃO acompanha o pacote; veja projeto/.env.example.
 """
 
 
-def _deve_entrar(caminho: Path) -> bool:
-    partes = set(caminho.relative_to(RAIZ).parts)
-    if partes & PASTAS_FORA:
+def _relativo(caminho: Path) -> str:
+    return caminho.relative_to(RAIZ).as_posix()
+
+
+def deve_entrar(caminho: Path) -> bool:
+    relativo = _relativo(caminho)
+    if set(Path(relativo).parts) & PASTAS_FORA:
         return False
-    if caminho.name in ARQUIVOS_FORA:
+    if relativo.startswith(PREFIXOS_FORA):
         return False
-    # Arquivo de bloqueio que o Word cria enquanto o .docx está aberto.
-    if caminho.name.startswith("~$"):
+    nome = caminho.name
+    if nome in ARQUIVOS_FORA or nome.startswith(("~$", ".tmp_")):
         return False
-    if caminho.suffix.lower() in SUFIXOS_FORA:
+    if nome.startswith(".env") and nome != ".env.example":
         return False
-    # O relatório entra na raiz do pacote, não dentro de projeto/.
-    return caminho != RELATORIO
+    return caminho.suffix.lower() not in SUFIXOS_FORA
 
 
-def empacotar() -> Path:
-    if not RELATORIO.exists():
-        raise SystemExit(f"Relatório não encontrado em {RELATORIO}")
+def pacote_simulado(destino: Path = None) -> pacote.PacoteLido:
+    """O pacote atual, validado e exclusivamente simulado — ou erro explícito."""
+    destino = Path(destino or c.PASTA_PROCESSADOS)
+    ponteiro = destino / c.PONTEIRO_ATUAL
+    if not ponteiro.is_file():
+        raise SystemExit("Sem dados/processados/ATUAL.json. Rode executar_pipeline.py --origem simulado.")
+    try:
+        id_execucao = json.loads(ponteiro.read_text(encoding="utf-8"))["id_execucao"]
+        lido = pacote.ler(pacote.pasta_execucao(destino, id_execucao))
+    except (pacote.PacoteInvalidoError, KeyError, TypeError, json.JSONDecodeError) as erro:
+        raise SystemExit(f"Pacote atual inválido: {erro}") from None
+    origens = {r["origem_dado"] for r in lido.analises + lido.laudos}
+    origens |= {m["origem_dado"] for m in lido.qualidade.get("metricas", [])} - {"desconhecida"}
+    if origens - {c.ORIGEM_SIMULADO}:
+        raise SystemExit(
+            f"O pacote atual ({id_execucao}) contém origens {sorted(origens)}. A entrega só leva "
+            "dados simulados: rode executar_pipeline.py --origem simulado e tente de novo.")
+    return lido
 
-    DESTINO.mkdir(exist_ok=True)
-    saida = DESTINO / f"{RELATORIO.stem}.zip"
 
-    with zipfile.ZipFile(saida, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as pacote:
-        # -------------------------------------------------- raiz do pacote
-        pacote.write(RELATORIO, RELATORIO.name)
-        pacote.writestr("LEIA-ME.txt", _mapa_do_pacote(RELATORIO.name))
-        pacote.writestr("LINK_DO_VIDEO.txt", AVISO_VIDEO)
+def empacotar(saida: Path = DESTINO_PADRAO) -> Path:
+    lido = pacote_simulado()
+    id_execucao = lido.manifesto["id_execucao"]
+    saida = Path(saida)
+    saida.parent.mkdir(parents=True, exist_ok=True)
+    if saida.exists():
+        saida.unlink()
 
-        for arquivo in sorted((RAIZ / "exportacoes").glob("*.*")):
-            if arquivo.suffix.lower() in {".csv", ".json"}:
-                pacote.write(arquivo, f"exportacoes/{arquivo.name}")
+    with zipfile.ZipFile(saida, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+        z.writestr("LEIA-ME.txt", _mapa_do_pacote(id_execucao))
+        z.writestr("LINK_DO_VIDEO.txt", AVISO_VIDEO)
 
-        # ------------------------------------------------------- projeto/
         for arquivo in sorted(RAIZ.rglob("*")):
-            if arquivo.is_dir() or not _deve_entrar(arquivo):
-                continue
-            pacote.write(arquivo, f"projeto/{arquivo.relative_to(RAIZ).as_posix()}")
+            if arquivo.is_file() and arquivo.resolve() != saida.resolve() and deve_entrar(arquivo):
+                z.write(arquivo, f"projeto/{_relativo(arquivo)}")
 
+        # Só o pacote simulado validado, e um ponteiro que aponta para ele.
+        for nome in (c.MANIFESTO, *c.ARQUIVOS_PACOTE):
+            z.write(lido.pasta / nome, f"projeto/dados/processados/{id_execucao}/{nome}")
+        z.writestr(f"projeto/dados/processados/{c.PONTEIRO_ATUAL}",
+                   json.dumps({"id_execucao": id_execucao}))
     return saida
 
 
-if __name__ == "__main__":
-    caminho = empacotar()
-    with zipfile.ZipFile(caminho) as pacote:
-        nomes = pacote.namelist()
-        tamanho = sum(i.file_size for i in pacote.infolist())
+def verificar(caminho: Path) -> list[str]:
+    """Problemas encontrados no zip (lista vazia = pacote limpo)."""
+    problemas = []
+    with zipfile.ZipFile(caminho) as z:
+        nomes = z.namelist()
+    for nome in nomes:
+        base = nome.rsplit("/", 1)[-1]
+        if (base.startswith(".env") and base != ".env.example") or base == "historico.db" \
+                or base.lower().endswith((".db", ".sqlite", ".sqlite3")):
+            problemas.append(f"segredo/banco: {nome}")
+        if any(f"/{p}" in f"/{nome}" for p in ("dados/raw/", "dados/bronze/", "dados/silver/",
+                                                "dados/gold/", "dados/campo/", "__pycache__/", ".tmp_")):
+            problemas.append(f"intermediário/temporário: {nome}")
+    pacotes = {n.split("/")[3] for n in nomes if n.startswith("projeto/dados/processados/exec_")}
+    if len(pacotes) != 1:
+        problemas.append(f"esperado 1 pacote processado, encontrados {sorted(pacotes)}")
+    obrigatorios = ["projeto/servidor.py", "projeto/web/dashboard.html", "projeto/src/analitica.py",
+                    "projeto/notebooks/pipeline_fase2_databricks.ipynb", "projeto/requirements.txt",
+                    "projeto/requirements-spark.txt", "projeto/requirements-dev.txt",
+                    "projeto/dados/simulados/laudos_simulados.jsonl",
+                    "projeto/dados/processados/ATUAL.json", "projeto/ferramentas/gerar_dados_simulados.py",
+                    "projeto/docs/fase2_roteiro_video.md", "projeto/testes/test_api_analitica.py",
+                    "projeto/modelo/agrosmart_mobilenetv2.keras"]
+    problemas += [f"faltando: {n}" for n in obrigatorios if n not in nomes]
+    return problemas
 
+
+def main() -> None:
+    analisador = argparse.ArgumentParser(description="Monta o .zip da entrega da Fase 2.")
+    analisador.add_argument("--saida", type=Path, default=DESTINO_PADRAO)
+    argumentos = analisador.parse_args()
+
+    caminho = empacotar(argumentos.saida)
+    with zipfile.ZipFile(caminho) as z:
+        nomes = z.namelist()
+        tamanho = sum(i.file_size for i in z.infolist())
     print(f"\n  {caminho}")
-    print(f"  {len(nomes)} arquivos · {caminho.stat().st_size / 1024:.0f} KB "
-          f"comprimidos (de {tamanho / 1024:.0f} KB)\n")
+    print(f"  {len(nomes)} arquivos · {caminho.stat().st_size / 1024:.0f} KB comprimidos "
+          f"(de {tamanho / 1024:.0f} KB)\n")
+    problemas = verificar(caminho)
+    if problemas:
+        print("  PROBLEMAS:\n    " + "\n    ".join(problemas))
+        sys.exit(1)
+    print("  Verificado: sem segredos, sem banco operacional, sem camadas intermediárias,")
+    print("  um único pacote processado (exclusivamente simulado) e ATUAL.json apontando para ele.")
 
-    raiz = sorted({n.split("/")[0] + ("/" if "/" in n else "") for n in nomes})
-    for nome in raiz:
-        print(f"    {nome}")
 
-    vazados = [n for n in nomes if n.endswith(".env") or n.endswith("historico.db")]
-    print("\n  " + ("ALERTA: segredo no pacote -> " + ", ".join(vazados)
-                    if vazados else "Sem .env e sem banco pessoal no pacote."))
+if __name__ == "__main__":
+    main()

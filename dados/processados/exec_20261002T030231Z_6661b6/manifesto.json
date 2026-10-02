@@ -1,0 +1,49 @@
+{
+  "tipo": "pacote_processado",
+  "versao_schema": "2.0.0",
+  "versao_normalizacao": "1.0.0",
+  "id_execucao": "exec_20261002T030231Z_6661b6",
+  "publicado_em": "2026-10-02T03:02:54Z",
+  "processado_em": "2026-10-02T03:02:31Z",
+  "por_origem": {
+    "simulado": {
+      "analises": 1157,
+      "laudos": 1311
+    }
+  },
+  "ambiente": "spark-local",
+  "versao_spark": "3.5.9",
+  "id_snapshot": "snap_20261002T030217Z_0d94ff",
+  "snapshot_extraido_em": "2026-10-02T03:02:17Z",
+  "registros_raw_por_origem": {
+    "simulado": 1321
+  },
+  "contagens": {
+    "bronze": 1321,
+    "silver": 1311,
+    "silver_rejeitados": 10,
+    "gold_analises": 1157,
+    "gold_laudos": 1311,
+    "gold_agregados": 201,
+    "gold_qualidade": 30
+  },
+  "arquivos": {
+    "analises.jsonl": {
+      "sha256": "0b8f28254baf561d6c827e3fa99b262162a117b959a073f30b06351832419a5d",
+      "linhas": 1157
+    },
+    "laudos.jsonl": {
+      "sha256": "3b501ae41f74737176246a629ddf1805d08de5b6e0c45b3fe416e995f433a389",
+      "linhas": 1311
+    },
+    "agregados.jsonl": {
+      "sha256": "dc6b837f4b544f10eff98611e0c22b701d2ed94cbc017fb572b2de6c15807e47",
+      "linhas": 201
+    },
+    "qualidade.json": {
+      "sha256": "34ebc7bc3bdf230b478237a8a092bd4fb2e0aa0b554bfe18f58b888f34a4c8e2",
+      "linhas": null
+    }
+  },
+  "status": "completo"
+}

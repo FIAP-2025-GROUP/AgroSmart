@@ -1,0 +1,276 @@
+{
+  "metricas": [
+    {
+      "origem_dado": "simulado",
+      "metrica": "analise_contexto_conflitante",
+      "valor": 0,
+      "denominador": 1157,
+      "unidade": "analise_declarada"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "analise_localidade_ausente",
+      "valor": 78,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "analise_sem_id_imagem",
+      "valor": 37,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "analises_identificadas",
+      "valor": 1157,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:cultura",
+      "valor": 22,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:id_analise",
+      "valor": 0,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:id_imagem",
+      "valor": 40,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:limiar_cnn",
+      "valor": 70,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:modo_solicitado",
+      "valor": 0,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:municipio",
+      "valor": 90,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:propriedade",
+      "valor": 90,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:talhao",
+      "valor": 100,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:tipo_amostra",
+      "valor": 0,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "ausente:uf",
+      "valor": 33,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "comparacoes",
+      "valor": 154,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "comparacoes_discordantes",
+      "valor": 7,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "diagnostico_nao_mapeado",
+      "valor": 4,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "identidade_incompleta",
+      "valor": 40,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "laudo_sem_analise",
+      "valor": 0,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "laudos_validos",
+      "valor": 1311,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "localidade_ausente",
+      "valor": 90,
+      "denominador": 1311,
+      "unidade": "laudo"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "reanalises",
+      "valor": 53,
+      "denominador": 1157,
+      "unidade": "analise"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "registros_recebidos",
+      "valor": 1321,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:condicao_invalida",
+      "valor": 1,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:confianca_fora_do_intervalo",
+      "valor": 2,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:data_invalida",
+      "valor": 2,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:duplicado",
+      "valor": 3,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:id_laudo_ausente",
+      "valor": 1,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitado:motor_desconhecido",
+      "valor": 1,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    },
+    {
+      "origem_dado": "simulado",
+      "metrica": "rejeitados",
+      "valor": 10,
+      "denominador": 1321,
+      "unidade": "registro_raw"
+    }
+  ],
+  "amostra_rejeitados": [
+    {
+      "id_laudo": "sim-20260901-ld-invalido-06",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "condicao_invalida",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00034\",\"id_laudo\":\"sim-20260901-ld-invalido-06\",\"id_imagem\":\"sim-img-d6756fc6e3b8\",\"arquivo\":\"IMG_20260602_0034.jpg\",\"data_analise\":\"2026-06-02T09:35:06-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"SC\",\"mu"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-invalido-01",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "confianca_fora_do_intervalo",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00067\",\"id_laudo\":\"sim-20260901-ld-invalido-01\",\"id_imagem\":\"sim-img-e4b8aeeec316\",\"arquivo\":\"IMG_20260601_0067.jpg\",\"data_analise\":\"2026-06-01T08:30:17-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"RS\",\"mu"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-invalido-02",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "confianca_fora_do_intervalo",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00051\",\"id_laudo\":\"sim-20260901-ld-invalido-02\",\"id_imagem\":\"sim-img-7ecfb6e642f7\",\"arquivo\":\"IMG_20260601_0051.jpg\",\"data_analise\":\"2026-06-01T12:15:21-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"SP\",\"mu"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-invalido-03",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "data_invalida",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00001\",\"id_laudo\":\"sim-20260901-ld-invalido-03\",\"id_imagem\":\"sim-img-13ea82f5e470\",\"arquivo\":\"IMG_20260601_0001.jpg\",\"data_analise\":\"31/02/2026 10:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"RS\",\"municipio\":"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-invalido-04",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "data_invalida",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00050\",\"id_laudo\":\"sim-20260901-ld-invalido-04\",\"id_imagem\":\"sim-img-48322a7b84e1\",\"arquivo\":\"IMG_20260601_0050.jpg\",\"data_analise\":\"ontem à tarde\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"RS\",\"municipio\":\"Be"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-00108",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "duplicado",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00089\",\"id_laudo\":\"sim-20260901-ld-00108\",\"id_imagem\":\"sim-img-2201f0d75fc2\",\"arquivo\":\"IMG_20260609_0089.jpg\",\"data_analise\":\"2026-06-09T06:10:33-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"SP\",\"municipi"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-00152",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "duplicado",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00131\",\"id_laudo\":\"sim-20260901-ld-00152\",\"id_imagem\":\"sim-img-e5b868ccdd00\",\"arquivo\":\"IMG_20260608_0131.jpg\",\"data_analise\":\"2026-06-08T17:44:41-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"RS\",\"municipi"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-00172",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "duplicado",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00149\",\"id_laudo\":\"sim-20260901-ld-00172\",\"id_imagem\":\"sim-img-cb5598d96c9f\",\"arquivo\":\"IMG_20260609_0149.jpg\",\"data_analise\":\"2026-06-09T06:00:16-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"SP\",\"municipi"
+    },
+    {
+      "id_laudo": null,
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "id_laudo_ausente",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00012\",\"id_laudo\":null,\"id_imagem\":\"sim-img-3a8dbd78985e\",\"arquivo\":\"IMG_20260602_0012.jpg\",\"data_analise\":\"2026-06-02T10:48:36-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"SP\",\"municipio\":\"Campinas\",\"prop"
+    },
+    {
+      "id_laudo": "sim-20260901-ld-invalido-05",
+      "origem_dado": "simulado",
+      "motivo_rejeicao": "motor_desconhecido",
+      "trecho": "{\"versao_schema\":\"2.0.0\",\"origem_instancia\":\"gerador-simulado\",\"id_analise\":\"sim-20260901-an-00043\",\"id_laudo\":\"sim-20260901-ld-invalido-05\",\"id_imagem\":\"sim-img-2dd096b4bf55\",\"arquivo\":\"IMG_20260602_0043.jpg\",\"data_analise\":\"2026-06-02T09:17:02-03:00\",\"fuso_origem\":\"America/Sao_Paulo\",\"uf\":\"RS\",\"mu"
+    }
+  ]
+}

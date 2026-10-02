@@ -26,3 +26,15 @@ dados/historico.db
 
 # O modelo treinado (~14 MB) É versionado de propósito: sem ele o avaliador
 # não consegue rodar o app. Não adicione modelo/ aqui.
+
+# Fase 2 — camadas geradas pelo pipeline. São reconstruídas a partir do RAW;
+# não precisam ir para o repositório.
+dados/raw/
+dados/bronze/
+dados/silver/
+dados/gold/
+dados/exportacoes/
+# `dados/simulados/` e `dados/processados/` NÃO estão aqui de propósito: o
+# primeiro é reprodutível e pequeno, o segundo permite abrir o dashboard sem
+# Java/Spark. Se o histórico real tiver dados que você não quer publicar, gere
+# o pacote só com `--origem simulado` antes de versionar.

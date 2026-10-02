@@ -1,0 +1,11 @@
+# AgroSmart - pipeline Spark local (Fase 2)
+# Instalação: .venv\Scripts\python.exe -m pip install -r requirements-spark.txt
+#
+# Só para ferramentas/executar_pipeline.py e testes/test_pipeline_spark.py.
+# O servidor web e o dashboard NÃO precisam disto.
+#
+# Configuração suportada: PySpark 3.5 + Java 17, com JAVA_HOME apontando para o
+# JDK 17 (ex.: Eclipse Temurin 17). Confira com "%JAVA_HOME%\bin\java" -version.
+# No Databricks nada disto é necessário: o runtime já traz o Spark.
+
+pyspark>=3.5,<3.6

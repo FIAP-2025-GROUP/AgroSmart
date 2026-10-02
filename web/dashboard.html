@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroSmart — Painel analítico</title>
+<link rel="stylesheet" href="/web/estilo.css">
+<link rel="stylesheet" href="/web/dashboard.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+
+<div class="brilhos" aria-hidden="true">
+  <span class="orbe orbe-a"></span>
+  <span class="orbe orbe-b"></span>
+</div>
+
+<header class="navegacao vidro">
+  <a class="marca" href="/">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 21c0-7 4-11 9-12 0 8-4 12-9 12Z" fill="url(#folha)"/>
+      <path d="M12 21C8 21 3 18 3 11c5 0 9 3 9 10Z" fill="url(#folha)" opacity=".62"/>
+      <defs><linearGradient id="folha" x1="3" y1="4" x2="21" y2="21">
+        <stop stop-color="#d7f56b"/><stop offset="1" stop-color="#37a05a"/>
+      </linearGradient></defs>
+    </svg>
+    <span>Agro<b>Smart</b></span>
+  </a>
+  <nav class="links">
+    <a href="/">Diagnóstico</a>
+    <a href="/#historico">Histórico</a>
+    <a href="/dashboard" class="ativo">Painel analítico</a>
+  </nav>
+  <div class="estado-motores">
+    <a class="botao" href="/">← Voltar ao diagnóstico</a>
+  </div>
+</header>
+
+<main class="painel">
+
+  <section class="painel-topo">
+    <div>
+      <h1>Painel <em>analítico</em></h1>
+      <p>Indicadores consolidados das análises do AgroSmart, processados pelo pipeline Spark
+         (RAW → Bronze → Silver → Gold).</p>
+    </div>
+    <div class="origens" id="origens" role="group" aria-label="Origem dos dados">
+      <button type="button" data-origem="real">Reais <small id="n-real"></small></button>
+      <button type="button" data-origem="simulado">Simulados <small id="n-simulado"></small></button>
+      <button type="button" data-origem="todas">Todos</button>
+    </div>
+  </section>
+
+  <div id="faixas"></div>
+
+  <section class="erro-consulta" id="erro-consulta" role="alert" hidden>
+    <div>
+      <strong>Não foi possível atualizar o painel para os filtros escolhidos.</strong>
+      <p id="erro-mensagem"></p>
+      <p class="erro-nota">Os indicadores foram ocultados para não exibir números de outro recorte.</p>
+    </div>
+    <div class="erro-acoes">
+      <button type="button" class="botao" id="erro-limpar">Limpar filtros</button>
+      <button type="button" class="botao" id="tentar-de-novo">Tentar de novo</button>
+    </div>
+  </section>
+
+  <div id="conteudo" hidden>
+    <form class="filtros vidro" id="filtros" aria-label="Filtros">
+      <label>De <input type="date" name="inicio"></label>
+      <label>Até <input type="date" name="fim"></label>
+      <label>UF <select name="uf"></select></label>
+      <label>Município <select name="municipio"></select></label>
+      <label>Propriedade <select name="propriedade"></select></label>
+      <label>Talhão <select name="talhao"></select></label>
+      <label>Cultura <select name="cultura"></select></label>
+      <label>Condição <select name="condicao"></select></label>
+      <label>Categoria <select name="categoria"></select></label>
+      <label>Motor <select name="motor"></select></label>
+      <button type="button" class="botao" id="limpar-filtros">Limpar filtros</button>
+    </form>
+
+    <div id="resultados">
+    <p class="unidades">
+      <b>Indicadores principais</b> (cards e gráficos): uma linha representativa por <b>análise</b> —
+      a condição do seu laudo principal. <b>Tabela de laudos</b> (no fim da página): um resultado por motor,
+      então uma análise no modo comparação aparece duas vezes. As duas contagens não precisam coincidir.
+    </p>
+    <dl class="cards" id="cards"></dl>
+    <p class="notas" id="notas"></p>
+
+    <section class="graficos">
+      <article class="grafico vidro largo">
+        <h2>Evolução semanal</h2>
+        <p class="sub">Análises por semana, empilhadas por condição. Abaixo, a parcela de análises
+           doentes em cada semana (doentes ÷ análises da própria semana).</p>
+        <div id="g-evolucao"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Condição das análises</h2>
+        <p class="sub">Condição do laudo principal de cada análise.</p>
+        <div id="g-condicao"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Categorias dos problemas</h2>
+        <p class="sub">Doença, praga, outra anomalia — com saudável e indeterminado para referência.</p>
+        <div id="g-categorias"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Diagnósticos mais frequentes</h2>
+        <p class="sub">Entre as análises doentes. Texto livre do VLM agrupado pela normalização da Silver.</p>
+        <div id="g-diagnosticos"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Comparação por localidade</h2>
+        <p class="sub">Parcela de análises doentes em cada município (doentes ÷ análises do município).</p>
+        <div id="g-localidades"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Distribuição por cultura</h2>
+        <p class="sub">Análises por cultura, divididas por condição.</p>
+        <div id="g-culturas"></div>
+      </article>
+
+      <article class="grafico vidro">
+        <h2>Distribuição por motor</h2>
+        <p class="sub">Laudos emitidos por motor (no modo comparação, uma análise gera dois laudos)
+           e motor do laudo principal de cada análise.</p>
+        <div id="g-motores"></div>
+      </article>
+    </section>
+
+    <section class="qualidade vidro" id="qualidade"></section>
+
+    <section class="registros vidro">
+      <div class="registros-topo">
+        <h2>Tabela de laudos</h2>
+        <p id="registros-resumo"></p>
+        <div class="paginacao">
+          <button type="button" class="botao" id="pag-anterior">‹ Anterior</button>
+          <span id="pag-info"></span>
+          <button type="button" class="botao" id="pag-proxima">Próxima ›</button>
+        </div>
+      </div>
+      <div class="rolagem">
+        <table>
+          <thead><tr>
+            <th>Data</th><th>Localidade</th><th>Cultura</th><th>Condição</th>
+            <th>Diagnóstico</th><th>Motor</th><th>Confiança</th><th>Origem</th>
+          </tr></thead>
+          <tbody id="tabela"></tbody>
+        </table>
+      </div>
+    </section>
+    </div>
+  </div>
+
+  <section class="sem-pacote vidro" id="sem-pacote" hidden></section>
+</main>
+
+<footer class="rodape">
+  <p>AgroSmart · Fase 2 — painel analítico. Dados <strong>simulados</strong> servem apenas para
+     demonstração e não representam incidência real no campo. Os laudos são triagem, não parecer técnico.</p>
+</footer>
+
+<div class="dica-grafico" id="dica" hidden></div>
+<div class="aviso-flutuante" id="aviso" hidden></div>
+
+<script src="/web/dashboard.js"></script>
+</body>
+</html>

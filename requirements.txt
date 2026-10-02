@@ -1,4 +1,4 @@
-# AgroSmart - Fase 1 (inferência local)
+# AgroSmart - aplicação (Fase 1 + painel analítico da Fase 2)
 # Instalação: py -3.12 -m pip install -r requirements.txt
 #
 # O treino roda no Google Colab (ver notebooks/treino_agrosmart.ipynb) e não
@@ -10,7 +10,13 @@
 # Se a instalação do pacote abaixo falhar, troque por: tensorflow-cpu>=2.16,<3.0
 
 tensorflow>=2.16,<3.0
-streamlit>=1.49,<2.0   # width="stretch" substituiu use_container_width a partir da 1.49
+streamlit>=1.49,<2.0   # width="stretch" substituiu use_container_width a partir da 1.49 (app.py, reserva)
+
+# Interface web principal (servidor.py). O FastAPI exige python-multipart para
+# receber o upload da imagem por formulário.
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9
 pillow>=10.0
 pandas>=2.0
 numpy>=1.26
@@ -20,3 +26,6 @@ numpy>=1.26
 google-genai>=1.0
 pydantic>=2.0
 python-dotenv>=1.0
+
+# Fase 2: o painel analítico só lê o pacote processado — não precisa de Spark
+# nem de Java. O pipeline Spark tem dependências à parte: requirements-spark.txt.

@@ -31,6 +31,7 @@
     <a href="#diagnostico" class="ativo">Diagnóstico</a>
     <a href="#historico">Histórico</a>
     <a href="#classes">Culturas</a>
+    <a href="/dashboard">Painel analítico</a>
   </nav>
 
   <div class="estado-motores" id="estado-motores">
@@ -98,6 +99,19 @@
       </div>
 
       <p class="dica" id="dica">Enquadre a folha ou o ramo afetado, com boa iluminação e fundo limpo.</p>
+
+      <details class="local-coleta" id="local-coleta">
+        <summary>Local da coleta <span>(opcional)</span></summary>
+        <p>Ajuda o painel analítico a comparar localidades. Fica guardado neste navegador para as próximas fotos.</p>
+        <div class="local-campos" id="local-campos">
+          <label>UF
+            <select name="uf"><option value="">—</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="AP">AP</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select>
+          </label>
+          <label>Município <input name="municipio" maxlength="80" autocomplete="off"></label>
+          <label>Propriedade <input name="propriedade" maxlength="80" autocomplete="off"></label>
+          <label>Talhão <input name="talhao" maxlength="80" autocomplete="off"></label>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -110,6 +124,7 @@
         <p id="historico-resumo">Nenhuma análise salva ainda.</p>
       </div>
       <div class="acoes">
+        <a class="botao" href="/dashboard">Painel analítico →</a>
         <a class="botao" href="/api/exportar/csv">Exportar CSV</a>
         <a class="botao" href="/api/exportar/json">Exportar JSON</a>
         <button class="botao perigo" id="limpar-tudo" type="button">Limpar</button>

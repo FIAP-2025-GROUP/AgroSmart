@@ -182,6 +182,7 @@ async function analisar(arquivo) {
   corpo.append("modo", modoAtual);
   corpo.append("limiar", estado?.limiar_padrao ?? 0.6);
   corpo.append("salvar", "true");
+  Object.entries(lerLocal()).forEach(([campo, valor]) => valor && corpo.append(campo, valor));
 
   try {
     const resposta = await fetch("/api/analisar", { method: "POST", body: corpo });
@@ -190,7 +191,7 @@ async function analisar(arquivo) {
     if (!resposta.ok) throw new Error(dados.detail || `Erro ${resposta.status}`);
 
     (dados.avisos || []).forEach((a) => avisar(a, "info"));
-    renderizarLaudos(dados.laudos, arquivo.name, urlPrevia);
+    renderizarLaudos(dados.laudos, arquivo.name, urlPrevia, dados.id_analise);
     // A foto agora vive dentro do laudo: a zona volta a ficar livre para a
     // próxima planta, sem exigir nenhum clique de limpeza.
     resetarEnvio();
@@ -248,7 +249,7 @@ function blocoLaudo(laudo, figura = "") {
     ${ranking}`;
 }
 
-function renderizarLaudos(laudos, nome, urlLocal = null) {
+function renderizarLaudos(laudos, nome, urlLocal = null, idAnalise = null) {
   // A miniatura do histórico é a fonte preferida: já vem com a rotação EXIF
   // corrigida e sobrevive ao descarte do objectURL local.
   const id = laudos[0]?.id_historico;
@@ -266,7 +267,12 @@ function renderizarLaudos(laudos, nome, urlLocal = null) {
   // No modo comparação os dois laudos descrevem a mesma foto: ela aparece
   // só no primeiro bloco.
   painelLaudo.innerHTML =
-    '<div class="laudo-acoes"><button type="button" class="botao-limpar" id="nova-analise">Analisar outra foto</button></div>' +
+    '<div class="laudo-acoes">' +
+    // Só para envios gravados agora: abre o painel na visão Reais e confirma o caso.
+    (idAnalise
+      ? `<a class="botao-limpar" href="/dashboard?origem=real&analise=${encodeURIComponent(idAnalise)}">Ver no painel</a>`
+      : "") +
+    '<button type="button" class="botao-limpar" id="nova-analise">Analisar outra foto</button></div>' +
     laudos
       .map((laudo, i) => blocoLaudo(laudo, i === 0 ? figura : ""))
       .join('<hr style="border:0;border-top:1px solid var(--borda);margin:32px 0">');
@@ -373,6 +379,25 @@ zona.addEventListener("drop", (e) => receber(e.dataTransfer.files[0]));
 document.addEventListener("paste", (e) => {
   const item = [...(e.clipboardData?.items || [])].find((i) => i.type.startsWith("image/"));
   if (item) receber(item.getAsFile());
+});
+
+/* -------------------------------------------------------- local da coleta */
+const CHAVE_LOCAL = "agrosmart.local-coleta";
+const camposLocal = () => [...$("local-campos").querySelectorAll("input, select")];
+
+function lerLocal() {
+  return Object.fromEntries(camposLocal().map((campo) => [campo.name, campo.value.trim()]));
+}
+
+// O local costuma se repetir foto após foto: fica lembrado neste navegador.
+try {
+  const salvo = JSON.parse(localStorage.getItem(CHAVE_LOCAL) || "{}");
+  camposLocal().forEach((campo) => { if (salvo[campo.name]) campo.value = salvo[campo.name]; });
+  if (Object.values(salvo).some(Boolean)) $("local-coleta").open = true;
+} catch { /* armazenamento indisponível: segue sem lembrar */ }
+
+$("local-campos").addEventListener("change", () => {
+  try { localStorage.setItem(CHAVE_LOCAL, JSON.stringify(lerLocal())); } catch { /* idem */ }
 });
 
 /* ------------------------------------------------------------------ início */

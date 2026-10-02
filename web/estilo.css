@@ -336,6 +336,26 @@ section { scroll-margin-top: 96px; }
 
 .dica { margin: 14px 2px 0; font-size: .82rem; color: var(--tenue); }
 
+/* Local da coleta (opcional) — alimenta o painel analítico. */
+.local-coleta { margin: 14px 2px 0; font-size: .84rem; color: var(--suave); }
+.local-coleta summary { cursor: pointer; color: var(--lima); list-style: none; }
+.local-coleta summary::-webkit-details-marker { display: none; }
+.local-coleta summary::before { content: "▸ "; }
+.local-coleta[open] summary::before { content: "▾ "; }
+.local-coleta summary span { color: var(--tenue); }
+.local-coleta p { margin: 8px 0 10px; font-size: .78rem; color: var(--tenue); }
+.local-campos { display: grid; grid-template-columns: 90px repeat(3, minmax(0, 1fr)); gap: 8px; }
+.local-campos label { display: grid; gap: 4px; font-size: .7rem; color: var(--tenue);
+  text-transform: uppercase; letter-spacing: .07em; }
+.local-campos input, .local-campos select {
+  min-width: 0; padding: 7px 9px; border-radius: 9px; font: inherit; font-size: .84rem;
+  background: rgba(0,0,0,.28); border: 1px solid var(--borda); color: var(--texto); color-scheme: dark;
+}
+.local-campos input:focus, .local-campos select:focus { outline: none; border-color: var(--borda-viva); }
+@media (max-width: 560px) { .local-campos { grid-template-columns: 1fr 1fr; } }
+.laudo-acoes { gap: 8px; }
+a.botao-limpar { text-decoration: none; display: inline-flex; align-items: center; }
+
 /* ------------------------------------------------------------------- laudo */
 .laudo {
   border-radius: var(--raio);

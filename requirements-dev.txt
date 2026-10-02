@@ -1,0 +1,12 @@
+# AgroSmart - testes
+# Instalação: .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+#
+# Os testes não carregam o TensorFlow, o modelo Keras nem o Gemini. Para rodar
+# só eles, sem baixar o TensorFlow, basta:
+#   pip install fastapi python-multipart pillow pandas numpy pydantic python-dotenv pytest httpx
+# Os testes de Spark (testes/test_pipeline_spark.py) são pulados se o PySpark ou o
+# Java não estiverem disponíveis; para rodá-los, instale também requirements-spark.txt.
+
+-r requirements.txt
+pytest>=8.0
+httpx>=0.27   # cliente usado pelo TestClient do FastAPI

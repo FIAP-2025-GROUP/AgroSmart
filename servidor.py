@@ -14,7 +14,7 @@ import io
 from pathlib import Path
 from typing import Any
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, UnidentifiedImageError
@@ -38,7 +38,7 @@ async def revalidar_frontend(requisicao, proximo):
     """
     resposta = await proximo(requisicao)
     caminho = requisicao.url.path
-    if caminho == "/" or caminho.startswith("/web/"):
+    if caminho in ("/", "/dashboard") or caminho.startswith("/web/"):
         resposta.headers["Cache-Control"] = "no-cache"
     return resposta
 
@@ -110,10 +110,24 @@ async def analisar(
     modo: str = Form(diagnostico.MODO_AUTOMATICO),
     limiar: float = Form(rotulos.LIMIAR_CONFIANCA),
     salvar: bool = Form(True),
+    uf: str | None = Form(None),
+    municipio: str | None = Form(None),
+    propriedade: str | None = Form(None),
+    talhao: str | None = Form(None),
 ) -> JSONResponse:
-    """Analisa uma imagem e, por padrão, grava o laudo no histórico."""
+    """Analisa uma imagem e, por padrão, grava o laudo no histórico.
+
+    Ao salvar, todos os laudos do envio ficam ligados a uma mesma análise
+    (`id_analise`), com o SHA-256 da imagem, o modo, o limiar aplicado e a
+    localidade opcional — é o que permite ao painel contar análises reais.
+    """
     if modo not in diagnostico.MODOS:
         raise HTTPException(400, f"Modo desconhecido: {modo}")
+    try:
+        contexto = historico.normalizar_contexto(
+            {"uf": uf, "municipio": municipio, "propriedade": propriedade, "talhao": talhao})
+    except ValueError as erro:
+        raise HTTPException(400, str(erro))
 
     conteudo = await imagem.read()
     if not conteudo:
@@ -139,12 +153,19 @@ async def analisar(
     if not resultados:
         raise HTTPException(500, "Nenhum laudo foi produzido para esta imagem.")
 
-    laudos = []
-    for resultado in resultados:
-        id_historico = historico.salvar(resultado, figura) if salvar else None
-        laudos.append(_serializar(resultado, id_historico))
+    id_analise, ids = None, [None] * len(resultados)
+    if salvar:
+        # O limiar só foi aplicado se o CNN rodou: não no modo só VLM, nem
+        # quando o modelo estava indisponível e só o generalista respondeu.
+        cnn_rodou = modo != diagnostico.MODO_VLM and not any(
+            aviso.startswith("Motor CNN indisponível") for aviso in avisos)
+        id_analise, ids = historico.salvar_analise(
+            resultados, figura, conteudo, nome, modo,
+            limiar if cnn_rodou else None, contexto,
+        )
 
-    return JSONResponse({"laudos": laudos, "avisos": avisos})
+    laudos = [_serializar(resultado, id_historico) for resultado, id_historico in zip(resultados, ids)]
+    return JSONResponse({"laudos": laudos, "avisos": avisos, "id_analise": id_analise})
 
 
 # --------------------------------------------------------------------------- #
@@ -209,11 +230,61 @@ def exportar(formato: str) -> Response:
 
 
 # --------------------------------------------------------------------------- #
+# Painel analítico (Fase 2)
+# --------------------------------------------------------------------------- #
+@app.get("/api/analitica")
+def painel_analitico(
+    origem: str | None = Query(None, description="real, simulado ou todas"),
+    inicio: str | None = Query(None, description="AAAA-MM-DD"),
+    fim: str | None = Query(None, description="AAAA-MM-DD"),
+    uf: str | None = None,
+    municipio: str | None = None,
+    propriedade: str | None = None,
+    talhao: str | None = None,
+    cultura: str | None = None,
+    condicao: str | None = None,
+    categoria: str | None = None,
+    motor: str | None = None,
+    pagina: int = 1,
+) -> dict[str, Any]:
+    """Cards, gráficos, tabela e qualidade do pacote processado, já filtrados.
+
+    Lê somente o pacote publicado pelo pipeline (`dados/processados/`); nunca
+    o SQLite operacional nem o Spark. O import é tardio de propósito: sem a
+    camada analítica, só esta rota responde 503 — o diagnóstico segue intacto.
+    """
+    try:
+        from src import analitica
+    except ImportError as erro:
+        raise HTTPException(503, f"Camada analítica indisponível: {erro}")
+
+    filtros = {
+        "origem": origem, "inicio": inicio, "fim": fim, "uf": uf, "municipio": municipio,
+        "propriedade": propriedade, "talhao": talhao, "cultura": cultura,
+        "condicao": condicao, "categoria": categoria, "motor": motor,
+    }
+    try:
+        return analitica.consultar(filtros, pagina=pagina)
+    except ValueError as erro:
+        raise HTTPException(400, str(erro))
+    except Exception as erro:  # pacote externo nunca derruba o servidor com 500
+        raise HTTPException(503, f"Camada analítica indisponível: {type(erro).__name__}: {erro}")
+
+
+# --------------------------------------------------------------------------- #
 # Frontend
 # --------------------------------------------------------------------------- #
 @app.get("/")
 def raiz() -> FileResponse:
     return FileResponse(PASTA_WEB / "index.html")
+
+
+@app.get("/dashboard")
+def dashboard() -> FileResponse:
+    pagina = PASTA_WEB / "dashboard.html"
+    if not pagina.exists():
+        raise HTTPException(404, "Painel analítico não instalado.")
+    return FileResponse(pagina)
 
 
 app.mount("/web", StaticFiles(directory=PASTA_WEB), name="web")
