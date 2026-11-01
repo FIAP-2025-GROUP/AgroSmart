@@ -127,6 +127,30 @@ em [docs/fase2_arquitetura.md](docs/fase2_arquitetura.md),
 
 ---
 
+## Fase 3 — Inteligência no campo (automação)
+
+Dados novos chegam a uma **pasta monitorada** (`dados/entrada/`). Um monitor em **micro-batch** lê só o que
+ainda não foi processado (checkpoint por arquivo + chave única por registro), aplica **5 regras booleanas**
+(R1 infestação > 30%, R2 mesmo problema 3 dias seguidos, R3 irrigação com histerese, R4 clima de requeima,
+R5 pragas na armadilha) e dispara as **ações sozinho**: arquivo de alerta, relatório de intervenção / plano de
+controle, e-mail (`.eml`, ou SMTP real se configurado no `.env`) e simulador de irrigação. Tudo aparece ao
+vivo em <http://localhost:8000/automacao>. Só biblioteca padrão + SQLite: não precisa de Spark, Java nem Kafka.
+
+```bash
+.venv\Scripts\python.exe ferramentas\monitor_fase3.py --reiniciar        # terminal 1: fica rodando
+.venv\Scripts\python.exe servidor.py                                       # terminal 2: abra /automacao
+.venv\Scripts\python.exe ferramentas\gerar_dados_fase3.py --continuo      # terminal 3: dados chegando
+.venv\Scripts\python.exe ferramentas\gerar_dados_fase3.py --reenviar 4    # prova: nada é reprocessado
+.venv\Scripts\python.exe -m pytest testes\test_automacao.py
+```
+
+Documento da entrega (regras, fluxograma, tabela de decisão, dicionário de dados, justificativa do
+micro-batch e evidências): [docs/fase3/AgroSmart_Fase3_Documento.pdf](docs/fase3/AgroSmart_Fase3_Documento.pdf)
+(fonte em `docs/fase3/documento_fase3.html`). Roteiro do vídeo: [docs/fase3/roteiro_video.md](docs/fase3/roteiro_video.md).
+Prints e logs da execução: `docs/fase3/evidencias/`.
+
+---
+
 ## Treinar o modelo CNN
 
 O treino roda no **Google Colab** com GPU gratuita — não precisa de nada
@@ -226,6 +250,14 @@ dados/simulados/          Dados de demonstração (semente fixa)
 dados/raw|bronze|silver|gold/   Camadas geradas (fora do Git)
 dados/processados/        Pacotes publicados para o painel (ATUAL.json aponta o vigente)
 testes/                   pytest: ingestão, pipeline Spark, API analítica
+
+# Fase 3
+src/automacao/            contrato, ingestão incremental, regras R1–R5, ações, monitor, painel
+ferramentas/monitor_fase3.py      monitor da pasta dados/entrada/ (micro-batch)
+ferramentas/gerar_dados_fase3.py  produtor de dados simulados (laudos + sensores)
+web/automacao.*           página /automacao (alertas, ações, irrigação, checkpoint)
+docs/fase3/               documento PDF, roteiro do vídeo, evidências (prints, logs, exemplos)
+dados/entrada/ e dados/fase3/     pasta monitorada e estado/saídas (gerados, fora do Git)
 ```
 
 `src/rotulos.py` define a ordem dos índices de saída da rede. O app compara essa

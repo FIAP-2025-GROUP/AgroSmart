@@ -1,0 +1,132 @@
+2026-11-01 19:45:07  Monitor da Fase 3 observando dados/entrada (a cada 2 s). Ctrl+C para parar.
+2026-11-01 19:45:07  aguardando dados novos...
+2026-11-01 19:45:11  [LOTE 1] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:11    laudos_2026-10-26.jsonl             16 linha(s) lida(s):  16 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:11    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:13  aguardando dados novos...
+2026-11-01 19:45:15  [LOTE 2] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:15    sensores_2026-10-26.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:15    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:17  [LOTE 3] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:17    sensores_2026-10-26.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:17    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:19  aguardando dados novos...
+2026-11-01 19:45:21  [LOTE 4] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:21    sensores_2026-10-26.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:21    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:23  [LOTE 5] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:23    laudos_2026-10-27.jsonl             17 linha(s) lida(s):  17 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:23    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:25  [LOTE 6] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:25    sensores_2026-10-27.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:25    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:27  aguardando dados novos...
+2026-11-01 19:45:29  [LOTE 7] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:29    sensores_2026-10-27.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:29    [ALERTA 1] R4 [MEDIA] Risco climático de requeima — Sítio Boa Esperança / talhão T02
+2026-11-01 19:45:29    [AÇÃO] alerta 1 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000001_R4_Sitio-Boa-Esperanca_T02.json
+2026-11-01 19:45:31  [LOTE 8] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:31    sensores_2026-10-27.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:31    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:33  aguardando dados novos...
+2026-11-01 19:45:35  [LOTE 9] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:35    laudos_2026-10-28.jsonl             17 linha(s) lida(s):  17 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:35    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:37  [LOTE 10] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:37    sensores_2026-10-28.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:37    [ALERTA 2] R3 [MEDIA] Irrigação LIGADA — Sítio Boa Esperança / talhão T01
+2026-11-01 19:45:37    [AÇÃO] alerta 2 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000002_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:45:37    [AÇÃO] alerta 2 · irrigacao      executada simulador: válvula LIGAR → saida/irrigacao/comando_000002_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:45:39  aguardando dados novos...
+2026-11-01 19:45:41  [LOTE 11] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:41    sensores_2026-10-28.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:41    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:43  [LOTE 12] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:43    sensores_2026-10-28.csv              4 linha(s) lida(s):   3 nova(s) ·   0 já processada(s) · 1 rejeitada(s)
+2026-11-01 19:45:43    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:45  aguardando dados novos...
+2026-11-01 19:45:47  [LOTE 13] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:47    laudos_2026-10-29.jsonl             19 linha(s) lida(s):  19 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:47    [ALERTA 3] R1 [ALTA] Alerta de infestação — Sítio Boa Esperança / talhão T02
+2026-11-01 19:45:47    [AÇÃO] alerta 3 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000003_R1_Sitio-Boa-Esperanca_T02.json
+2026-11-01 19:45:47    [AÇÃO] alerta 3 · relatorio      executada relatório de intervenção gerado → saida/relatorios/intervencao_000003_R1_Sitio-Boa-Esperanca_T02.md
+2026-11-01 19:45:47    [AÇÃO] alerta 3 · email          executada simulado: e-mail para agronomo@fazenda.example na caixa de saída → saida/emails/email_000003_R1_Sitio-Boa-Esperanca_T02.eml
+2026-11-01 19:45:49  [LOTE 14] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:49    sensores_2026-10-29.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:49    [ALERTA 4] R3 [INFORMATIVA] Irrigação DESLIGADA — Sítio Boa Esperança / talhão T01
+2026-11-01 19:45:49    [AÇÃO] alerta 4 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000004_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:45:49    [AÇÃO] alerta 4 · irrigacao      executada simulador: válvula DESLIGAR → saida/irrigacao/comando_000004_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:45:51  aguardando dados novos...
+2026-11-01 19:45:53  [LOTE 15] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:53    sensores_2026-10-29.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:53    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:55  [LOTE 16] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:55    sensores_2026-10-29.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:45:55    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:45:57  aguardando dados novos...
+2026-11-01 19:45:59  [LOTE 17] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:45:59    laudos_2026-10-30.jsonl             17 linha(s) lida(s):  16 nova(s) ·   0 já processada(s) · 1 rejeitada(s)
+2026-11-01 19:45:59    [ALERTA 5] R2 [ALTA] Plano de controle acionado: Requeima — Sítio Boa Esperança / talhão T02
+2026-11-01 19:45:59    [AÇÃO] alerta 5 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000005_R2_Sitio-Boa-Esperanca_T02.json
+2026-11-01 19:45:59    [AÇÃO] alerta 5 · relatorio      executada plano de controle gerado → saida/relatorios/plano_000005_R2_Sitio-Boa-Esperanca_T02.md
+2026-11-01 19:45:59    [AÇÃO] alerta 5 · email          executada simulado: e-mail para agronomo@fazenda.example na caixa de saída → saida/emails/email_000005_R2_Sitio-Boa-Esperanca_T02.eml
+2026-11-01 19:46:01  [LOTE 18] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:01    sensores_2026-10-30.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:01    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:46:03  aguardando dados novos...
+2026-11-01 19:46:05  [LOTE 19] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:05    sensores_2026-10-30.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:05    [ALERTA 6] R5 [MEDIA] Pragas na armadilha — Sítio Boa Esperança / talhão T03
+2026-11-01 19:46:05    [AÇÃO] alerta 6 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000006_R5_Sitio-Boa-Esperanca_T03.json
+2026-11-01 19:46:07  [LOTE 20] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:07    sensores_2026-10-30.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:07    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:46:09  aguardando dados novos...
+2026-11-01 19:46:11  [LOTE 21] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:11    laudos_2026-10-31.jsonl             16 linha(s) lida(s):  16 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:11    [ALERTA 7] R2 [ALTA] Plano de controle acionado: Ácaro-rajado — Sítio Boa Esperança / talhão T03
+2026-11-01 19:46:11    [AÇÃO] alerta 7 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000007_R2_Sitio-Boa-Esperanca_T03.json
+2026-11-01 19:46:11    [AÇÃO] alerta 7 · relatorio      executada plano de controle gerado → saida/relatorios/plano_000007_R2_Sitio-Boa-Esperanca_T03.md
+2026-11-01 19:46:11    [AÇÃO] alerta 7 · email          executada simulado: e-mail para agronomo@fazenda.example na caixa de saída → saida/emails/email_000007_R2_Sitio-Boa-Esperanca_T03.eml
+2026-11-01 19:46:13  [LOTE 22] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:13    sensores_2026-10-31.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:13    [ALERTA 8] R3 [CRITICA] Irrigação LIGADA — Sítio Boa Esperança / talhão T01
+2026-11-01 19:46:13    [AÇÃO] alerta 8 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000008_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:46:13    [AÇÃO] alerta 8 · irrigacao      executada simulador: válvula LIGAR → saida/irrigacao/comando_000008_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:46:13    [AÇÃO] alerta 8 · email          executada simulado: e-mail para agronomo@fazenda.example na caixa de saída → saida/emails/email_000008_R3_Sitio-Boa-Esperanca_T01.eml
+2026-11-01 19:46:15  aguardando dados novos...
+2026-11-01 19:46:17  [LOTE 23] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:17    sensores_2026-10-31.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:17    [ALERTA 9] R4 [MEDIA] Risco climático de requeima — Sítio Boa Esperança / talhão T02
+2026-11-01 19:46:17    [ALERTA 10] R5 [ALTA] Pragas na armadilha — Sítio Boa Esperança / talhão T03
+2026-11-01 19:46:17    [AÇÃO] alerta 9 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000009_R4_Sitio-Boa-Esperanca_T02.json
+2026-11-01 19:46:17    [AÇÃO] alerta 10 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000010_R5_Sitio-Boa-Esperanca_T03.json
+2026-11-01 19:46:17    [AÇÃO] alerta 10 · email          executada simulado: e-mail para agronomo@fazenda.example na caixa de saída → saida/emails/email_000010_R5_Sitio-Boa-Esperanca_T03.eml
+2026-11-01 19:46:19  [LOTE 24] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:19    sensores_2026-10-31.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:19    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:46:21  aguardando dados novos...
+2026-11-01 19:46:23  [LOTE 25] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:23    laudos_2026-11-01.jsonl             16 linha(s) lida(s):  16 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:23    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:46:25  [LOTE 26] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:25    sensores_2026-11-01.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:25    [ALERTA 11] R3 [INFORMATIVA] Irrigação DESLIGADA — Sítio Boa Esperança / talhão T01
+2026-11-01 19:46:25    [AÇÃO] alerta 11 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000011_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:46:25    [AÇÃO] alerta 11 · irrigacao      executada simulador: válvula DESLIGAR → saida/irrigacao/comando_000011_R3_Sitio-Boa-Esperanca_T01.json
+2026-11-01 19:46:27  aguardando dados novos...
+2026-11-01 19:46:29  [LOTE 27] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:29    sensores_2026-11-01.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:29    [ALERTA 12] R5 [MEDIA] Pragas na armadilha — Sítio Boa Esperança / talhão T03
+2026-11-01 19:46:29    [AÇÃO] alerta 12 · arquivo_alerta executada arquivo de alerta gravado → saida/alertas/alerta_000012_R5_Sitio-Boa-Esperanca_T03.json
+2026-11-01 19:46:31  [LOTE 28] 1 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:31    sensores_2026-11-01.csv              4 linha(s) lida(s):   4 nova(s) ·   0 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:31    regras avaliadas: nenhuma condição atendida, nenhuma ação
+2026-11-01 19:46:33  aguardando dados novos...
+2026-11-01 19:46:39  [LOTE 29] 2 arquivo(s) com dados novos na pasta monitorada
+2026-11-01 19:46:39    laudos_2026-10-29_reenvio.jsonl     19 linha(s) lida(s):   0 nova(s) ·  19 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:39    sensores_2026-10-29_reenvio.csv     12 linha(s) lida(s):   0 nova(s) ·  12 já processada(s) · 0 rejeitada(s)
+2026-11-01 19:46:39    nenhum registro novo (todos já processados): nenhuma ação disparada
+2026-11-01 19:46:41  aguardando dados novos...
+--- reinício do monitor (checkpoint persistido no SQLite)
+2026-11-01 19:47:03  nenhum dado novo desde o último checkpoint (16 arquivo(s) já lidos): nada a processar

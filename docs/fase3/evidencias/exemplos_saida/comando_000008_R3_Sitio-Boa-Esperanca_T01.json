@@ -1,0 +1,9 @@
+{
+  "dispositivo": "valvula-sitio-boa-esperanca-t01",
+  "comando": "LIGAR",
+  "id_alerta": 8,
+  "motivo": "Umidade do solo em 14.6% (limite 25%) e 0.0 mm de chuva nas últimas 24 h: irrigação acionada. Nível crítico de umidade.",
+  "instante_evento": "2026-10-31T06:00:00-03:00",
+  "enviado_em": "2026-11-01T19:48:16-03:00",
+  "simulado": true
+}

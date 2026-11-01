@@ -1,0 +1,71 @@
+From: AgroSmart <agrosmart@fazenda.example>
+To: agronomo@fazenda.example
+Subject: [AgroSmart][ALTA] Alerta de =?utf-8?b?aW5mZXN0YcOnw6NvIOKAlCBTw610?=
+ =?utf-8?q?io_Boa_Esperan=C3=A7a_/_talh=C3=A3o?= T02
+Date: Sun, 01 Nov 2026 19:48:15 -0300
+Message-ID: <179357329595.16326.14207685263479482675.alerta3@agrosmart.local>
+X-AgroSmart-Alerta: 3
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7081624526650515445=="
+
+--===============7081624526650515445==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Alerta de infesta=C3=A7=C3=A3o =E2=80=94 S=C3=ADtio Boa Esperan=C3=A7a / talh=
+=C3=A3o T02
+
+7 de 22 an=C3=A1lises conclusivas (32%) entre 23/10 e 29/10 apontaram planta =
+doente, acima do limite de 30%. Problema mais frequente: Requeima.
+
+O que fazer:
+Manejo indicado para Requeima: Doen=C3=A7a de evolu=C3=A7=C3=A3o r=C3=A1pida =
+em clima =C3=BAmido e ameno: eliminar plantas afetadas, reduzir a molhagem fo=
+liar e aplicar fungicida sist=C3=AAmico com urg=C3=AAncia.
+
+Regra R1 (Alerta de infesta=C3=A7=C3=A3o): SE an=C3=A1lises_conclusivas_7d =
+=E2=89=A5 5 AND doentes_7d/an=C3=A1lises_7d > 30% AND NOT alerta_R1_nos_=C3=
+=BAltimos_7d
+Momento do dado: 2026-10-29T23:59:59-03:00
+Alerta n=C2=BA 3 =C2=B7 micro-batch n=C2=BA 4
+
+--
+AgroSmart =C2=B7 mensagem autom=C3=A1tica. O diagn=C3=B3stico por imagem =C3=
+=A9 uma triagem;
+a aplica=C3=A7=C3=A3o de defensivo exige engenheiro agr=C3=B4nomo.
+
+--===============7081624526650515445==
+Content-Type: text/markdown
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="intervencao_000003_R1_Sitio-Boa-Esperanca_T02.md"
+MIME-Version: 1.0
+
+IyBBZ3JvU21hcnQg4oCUIFJlbGF0w7NyaW8gZGUgaW50ZXJ2ZW7Dp8OjbwoKKipBbGVydGEgbsK6
+IDMqKiDCtyByZWdyYSAqKlIxIOKAlCBBbGVydGEgZGUgaW5mZXN0YcOnw6NvKiogwrcgc2V2ZXJp
+ZGFkZSAqKkFMVEEqKgoKfCB8IHwKfC0tLXwtLS18CnwgTG9jYWwgfCBTw610aW8gQm9hIEVzcGVy
+YW7Dp2EgwrcgdGFsaMOjbyBUMDIgwrcgQ2FtcGluYXMvU1AgfAp8IEN1bHR1cmEgfCBUb21hdGUg
+fAp8IE1vbWVudG8gZG8gZGFkbyB8IDIwMjYtMTAtMjlUMjM6NTk6NTktMDM6MDAgfAp8IEdlcmFk
+byBlbSB8IDIwMjYtMTEtMDFUMTk6NDg6MTUtMDM6MDAgKG1pY3JvLWJhdGNoIG7CuiA0KSB8Cgoj
+IyBTaXR1YcOnw6NvCgo3IGRlIDIyIGFuw6FsaXNlcyBjb25jbHVzaXZhcyAoMzIlKSBlbnRyZSAy
+My8xMCBlIDI5LzEwIGFwb250YXJhbSBwbGFudGEgZG9lbnRlLCBhY2ltYSBkbyBsaW1pdGUgZGUg
+MzAlLiBQcm9ibGVtYSBtYWlzIGZyZXF1ZW50ZTogUmVxdWVpbWEuCgojIyBSZWdyYSBxdWUgZGlz
+cGFyb3UKCmBTRSBhbsOhbGlzZXNfY29uY2x1c2l2YXNfN2Qg4omlIDUgQU5EIGRvZW50ZXNfN2Qv
+YW7DoWxpc2VzXzdkID4gMzAlIEFORCBOT1QgYWxlcnRhX1IxX25vc1/Dumx0aW1vc183ZCBFTlTD
+g08gYXJxdWl2byBkZSBhbGVydGEgKyByZWxhdMOzcmlvIGRlIGludGVydmVuw6fDo28gKyBlLW1h
+aWxgCgojIyBFdmlkw6puY2lhcwoKfCBJbmRpY2Fkb3IgfCBWYWxvciB8CnwtLS18LS0tfAp8IGFu
+YWxpc2VzIGNvbmNsdXNpdmFzIHwgMjIgfAp8IGRpYWdub3N0aWNvcyB8IFJlcXVlaW1hOiA3IHwK
+fCBkb2VudGVzIHwgNyB8CnwgamFuZWxhIHwgMjAyNi0xMC0yMywgMjAyNi0xMC0yOSB8CnwgbGlt
+aXRlIHwgMzAuMCUgfAp8IHByb3BvcmNhbyBkb2VudGUgfCAzMS44JSB8CgojIyBJbnRlcnZlbsOn
+w6NvIHJlY29tZW5kYWRhCgoxLiBbIF0gVmlzdG9yaWFyIG8gdGFsaMOjbyBlIGNvbmZpcm1hciBv
+IGRpYWduw7NzdGljbyBjb20gbyBlbmdlbmhlaXJvIGFncsO0bm9tbyAoYXTDqSAyNCBoKS4KMi4g
+WyBdIFNlIGNvbmZpcm1hZG8sIGFwbGljYXIgbyBtYW5lam8gaW5kaWNhZG86IE1hbmVqbyBpbmRp
+Y2FkbyBwYXJhIFJlcXVlaW1hOiBEb2Vuw6dhIGRlIGV2b2x1w6fDo28gcsOhcGlkYSBlbSBjbGlt
+YSDDum1pZG8gZSBhbWVubzogZWxpbWluYXIgcGxhbnRhcyBhZmV0YWRhcywgcmVkdXppciBhIG1v
+bGhhZ2VtIGZvbGlhciBlIGFwbGljYXIgZnVuZ2ljaWRhIHNpc3TDqm1pY28gY29tIHVyZ8OqbmNp
+YS4KMy4gWyBdIFJlYXZhbGlhciBvIHRhbGjDo28gY29tIG5vdmFzIGZvdG9zIGVtIDMgZGlhcy4K
+Ci0tLQoqR2VyYWRvIGF1dG9tYXRpY2FtZW50ZSBwZWxvIEFncm9TbWFydCAocmVncmFzIHYzLjAu
+MCkuIE8gZGlhZ27Ds3N0aWNvIHBvciBpbWFnZW0gw6kgdW1hIHRyaWFnZW06CmEgZGVjaXPDo28g
+ZGUgYXBsaWNhciBkZWZlbnNpdm8gZXhpZ2UgZW5nZW5oZWlybyBhZ3LDtG5vbW8uKgo=
+
+--===============7081624526650515445==--

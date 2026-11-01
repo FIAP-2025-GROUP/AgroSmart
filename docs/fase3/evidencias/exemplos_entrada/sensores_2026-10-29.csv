@@ -1,0 +1,13 @@
+id_leitura,instante,id_sensor,uf,municipio,propriedade,talhao,cultura,umidade_solo_pct,temperatura_c,umidade_ar_pct,chuva_mm,pragas_armadilha
+sns-est-fsc-G2-20261029T0600,2026-10-29T06:00:00-03:00,est-fsc-G2,PR,Cascavel,Fazenda Santa Clara,Gleba 2,Milho,31.6,17.2,71,0,3
+sns-est-sbe-T01-20261029T0600,2026-10-29T06:00:00-03:00,est-sbe-T01,SP,Campinas,Sítio Boa Esperança,T01,Batata,36.2,18.7,71,0,2
+sns-est-sbe-T02-20261029T0600,2026-10-29T06:00:00-03:00,est-sbe-T02,SP,Campinas,Sítio Boa Esperança,T02,Tomate,31.5,18.0,82,0,2
+sns-est-sbe-T03-20261029T0600,2026-10-29T06:00:00-03:00,est-sbe-T03,SP,Campinas,Sítio Boa Esperança,T03,Tomate,29.5,22.3,52,0,6
+sns-est-fsc-G2-20261029T1200,2026-10-29T12:00:00-03:00,est-fsc-G2,PR,Cascavel,Fazenda Santa Clara,Gleba 2,Milho,30.9,26.4,54,0,2
+sns-est-sbe-T01-20261029T1200,2026-10-29T12:00:00-03:00,est-sbe-T01,SP,Campinas,Sítio Boa Esperança,T01,Batata,34.4,27.0,52,0,2
+sns-est-sbe-T02-20261029T1200,2026-10-29T12:00:00-03:00,est-sbe-T02,SP,Campinas,Sítio Boa Esperança,T02,Tomate,30.4,25.2,66,0,3
+sns-est-sbe-T03-20261029T1200,2026-10-29T12:00:00-03:00,est-sbe-T03,SP,Campinas,Sítio Boa Esperança,T03,Tomate,28.7,31.9,39,0,8
+sns-est-fsc-G2-20261029T1800,2026-10-29T18:00:00-03:00,est-fsc-G2,PR,Cascavel,Fazenda Santa Clara,Gleba 2,Milho,30.5,22.6,62,0,3
+sns-est-sbe-T01-20261029T1800,2026-10-29T18:00:00-03:00,est-sbe-T01,SP,Campinas,Sítio Boa Esperança,T01,Batata,32.3,24.0,60,0,3
+sns-est-sbe-T02-20261029T1800,2026-10-29T18:00:00-03:00,est-sbe-T02,SP,Campinas,Sítio Boa Esperança,T02,Tomate,30.0,22.1,72,0,2
+sns-est-sbe-T03-20261029T1800,2026-10-29T18:00:00-03:00,est-sbe-T03,SP,Campinas,Sítio Boa Esperança,T03,Tomate,28.2,28.4,45,0,9

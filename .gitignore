@@ -38,3 +38,8 @@ dados/exportacoes/
 # primeiro é reprodutível e pequeno, o segundo permite abrir o dashboard sem
 # Java/Spark. Se o histórico real tiver dados que você não quer publicar, gere
 # o pacote só com `--origem simulado` antes de versionar.
+
+# Fase 3 — pasta monitorada e estado/saídas do monitor. São regenerados pelo
+# gerador e pelo monitor; as evidências da entrega ficam em docs/fase3/evidencias/.
+dados/entrada/
+dados/fase3/

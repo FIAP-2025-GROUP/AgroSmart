@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroSmart — Automação</title>
+<link rel="stylesheet" href="/web/estilo.css">
+<link rel="stylesheet" href="/web/automacao.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+
+<div class="brilhos" aria-hidden="true">
+  <span class="orbe orbe-a"></span>
+  <span class="orbe orbe-b"></span>
+</div>
+
+<header class="navegacao vidro">
+  <a class="marca" href="/">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 21c0-7 4-11 9-12 0 8-4 12-9 12Z" fill="url(#folha)"/>
+      <path d="M12 21C8 21 3 18 3 11c5 0 9 3 9 10Z" fill="url(#folha)" opacity=".62"/>
+      <defs><linearGradient id="folha" x1="3" y1="4" x2="21" y2="21">
+        <stop stop-color="#d7f56b"/><stop offset="1" stop-color="#37a05a"/>
+      </linearGradient></defs>
+    </svg>
+    <span>Agro<b>Smart</b></span>
+  </a>
+  <nav class="links">
+    <a href="/">Diagnóstico</a>
+    <a href="/dashboard">Painel analítico</a>
+    <a href="/automacao" class="ativo">Automação</a>
+  </nav>
+  <div class="estado-motores">
+    <span class="monitor" id="monitor"><i></i><span>verificando monitor…</span></span>
+  </div>
+</header>
+
+<main class="auto">
+
+  <section class="auto-topo">
+    <div>
+      <h1>Inteligência <em>no campo</em></h1>
+      <p>Fase 3: dados novos chegam à pasta monitorada, o micro-batch lê só o que ainda não foi
+         processado, as regras de decisão avaliam e as ações saem sozinhas: alerta, relatório,
+         e-mail e irrigação.</p>
+    </div>
+    <div class="fluxo" aria-label="Fluxo de dados">
+      <span>Origem<small>sensores + laudos</small></span><b>→</b>
+      <span>Ingestão<small>micro-batch + checkpoint</small></span><b>→</b>
+      <span>Regras<small>R1 a R5</small></span><b>→</b>
+      <span>Ação<small>automática</small></span>
+    </div>
+  </section>
+
+  <div class="faixa-sim" id="faixa">
+    <strong>CENÁRIO SIMULADO</strong>
+    <span>Leituras de sensores e laudos vêm do gerador da Fase 3 (<code>ferramentas/gerar_dados_fase3.py</code>)
+      e não representam nenhuma lavoura real. Pasta monitorada: <code id="entrada">—</code></span>
+  </div>
+
+  <section class="vazio vidro" id="vazio" hidden>
+    <strong>Sem dados ainda.</strong>
+    <p id="vazio-motivo"></p>
+    <pre>.venv\Scripts\python.exe ferramentas\monitor_fase3.py
+.venv\Scripts\python.exe ferramentas\gerar_dados_fase3.py --continuo</pre>
+  </section>
+
+  <div id="conteudo" hidden>
+    <section class="cards" id="cards"></section>
+
+    <h2>Talhões agora</h2>
+    <section class="talhoes" id="talhoes"></section>
+
+    <div class="colunas">
+      <section>
+        <h2>Alertas e ações <small id="n-alertas"></small></h2>
+        <div class="feed" id="alertas"></div>
+      </section>
+      <aside>
+        <h2>Micro-batches</h2>
+        <div class="vidro tabela-caixa"><table id="lotes"></table></div>
+        <h2>Checkpoint por arquivo</h2>
+        <div class="vidro tabela-caixa"><table id="arquivos"></table></div>
+        <h2>Rejeitados</h2>
+        <div class="vidro tabela-caixa"><table id="rejeitados"></table></div>
+      </aside>
+    </div>
+
+    <h2>Regras de decisão</h2>
+    <div class="vidro tabela-caixa"><table id="regras" class="regras"></table></div>
+  </div>
+</main>
+
+<dialog id="visor" class="visor vidro">
+  <header><strong id="visor-titulo"></strong><button type="button" id="visor-fechar" class="botao">Fechar</button></header>
+  <small id="visor-arquivo"></small>
+  <pre id="visor-texto"></pre>
+</dialog>
+
+<script src="/web/automacao.js"></script>
+</body>
+</html>

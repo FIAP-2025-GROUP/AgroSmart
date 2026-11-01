@@ -38,7 +38,7 @@ async def revalidar_frontend(requisicao, proximo):
     """
     resposta = await proximo(requisicao)
     caminho = requisicao.url.path
-    if caminho in ("/", "/dashboard") or caminho.startswith("/web/"):
+    if caminho in ("/", "/dashboard", "/automacao") or caminho.startswith("/web/"):
         resposta.headers["Cache-Control"] = "no-cache"
     return resposta
 
@@ -272,6 +272,28 @@ def painel_analitico(
 
 
 # --------------------------------------------------------------------------- #
+# Automação (Fase 3)
+# --------------------------------------------------------------------------- #
+@app.get("/api/automacao")
+def painel_automacao() -> dict[str, Any]:
+    """Estado do monitor, alertas, ações, irrigação e checkpoint (somente leitura)."""
+    from src.automacao import painel
+
+    return painel.consultar()
+
+
+@app.get("/api/automacao/acao/{id_acao}")
+def conteudo_acao(id_acao: int) -> dict[str, Any]:
+    """Conteúdo do arquivo gerado por uma ação (relatório, e-mail, comando, alerta)."""
+    from src.automacao import painel
+
+    conteudo = painel.conteudo_da_acao(id_acao)
+    if conteudo is None:
+        raise HTTPException(404, "Ação não encontrada ou sem arquivo gerado.")
+    return conteudo
+
+
+# --------------------------------------------------------------------------- #
 # Frontend
 # --------------------------------------------------------------------------- #
 @app.get("/")
@@ -285,6 +307,11 @@ def dashboard() -> FileResponse:
     if not pagina.exists():
         raise HTTPException(404, "Painel analítico não instalado.")
     return FileResponse(pagina)
+
+
+@app.get("/automacao")
+def automacao() -> FileResponse:
+    return FileResponse(PASTA_WEB / "automacao.html")
 
 
 app.mount("/web", StaticFiles(directory=PASTA_WEB), name="web")

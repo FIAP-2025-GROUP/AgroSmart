@@ -1,0 +1,30 @@
+{
+  "arquivos": [
+    {
+      "nome": "laudos_2026-10-26.jsonl",
+      "tipo": "laudo",
+      "bytes_lidos": 16435,
+      "linhas_lidas": 16
+    },
+    {
+      "nome": "sensores_2026-10-26.csv",
+      "tipo": "sensor",
+      "bytes_lidos": 1699,
+      "linhas_lidas": 13
+    },
+    {
+      "nome": "laudos_2026-10-27.jsonl",
+      "tipo": "laudo",
+      "bytes_lidos": 17384,
+      "linhas_lidas": 17
+    },
+    {
+      "nome": "sensores_2026-10-27.csv",
+      "tipo": "sensor",
+      "bytes_lidos": 1705,
+      "linhas_lidas": 13
+    },
+    {
+      "nome": "laudos_2026-10-28.jsonl",
+      "tipo": "laudo",
+      "bytes_lidos": 17736,

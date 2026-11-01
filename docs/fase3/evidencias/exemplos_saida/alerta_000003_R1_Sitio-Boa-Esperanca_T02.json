@@ -1,0 +1,30 @@
+{
+  "id": 3,
+  "chave_dedup": "R1|Sítio Boa Esperança|T02|2026-10-29",
+  "regra": "R1",
+  "severidade": "alta",
+  "propriedade": "Sítio Boa Esperança",
+  "talhao": "T02",
+  "cultura": "Tomate",
+  "uf": "SP",
+  "municipio": "Campinas",
+  "titulo": "Alerta de infestação — Sítio Boa Esperança / talhão T02",
+  "mensagem": "7 de 22 análises conclusivas (32%) entre 23/10 e 29/10 apontaram planta doente, acima do limite de 30%. Problema mais frequente: Requeima.",
+  "recomendacao": "Manejo indicado para Requeima: Doença de evolução rápida em clima úmido e ameno: eliminar plantas afetadas, reduzir a molhagem foliar e aplicar fungicida sistêmico com urgência.",
+  "evidencias": {
+    "analises_conclusivas": 22,
+    "diagnosticos": {
+      "Requeima": 7
+    },
+    "doentes": 7,
+    "janela": [
+      "2026-10-23",
+      "2026-10-29"
+    ],
+    "limite": 0.3,
+    "proporcao_doente": 0.3182
+  },
+  "instante_evento": "2026-10-29T23:59:59-03:00",
+  "criado_em": "2026-11-01T19:48:15-03:00",
+  "id_lote": 4
+}

@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>AgroSmart Fase 3 — Inteligência no Campo</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root { --verde: #1f6b3a; --lima: #7cb518; --tinta: #1d2a22; --suave: #4d5f53; --linha: #d5dfd8; --fundo: #f3f7f4;
+          --critica: #c8382a; --alta: #d9731f; --media: #b8901a; --info: #2f6fb8; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Inter, -apple-system, Helvetica, Arial, sans-serif; color: var(--tinta);
+         font-size: 10.2pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 24pt; margin: 0 0 4px; letter-spacing: -.02em; color: var(--verde); }
+  h2 { font-size: 15pt; margin: 22px 0 8px; color: var(--verde); border-bottom: 2px solid var(--lima); padding-bottom: 4px;
+       break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 16px 0 6px; break-after: avoid; }
+  p { margin: 6px 0; }
+  code, pre { font-family: Menlo, Consolas, monospace; font-size: 8.6pt; }
+  pre { background: var(--fundo); border: 1px solid var(--linha); border-radius: 6px; padding: 8px 10px;
+        white-space: pre-wrap; word-break: break-word; break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 8.8pt; break-inside: auto; }
+  th, td { border: 1px solid var(--linha); padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: var(--fundo); }
+  tr { break-inside: avoid; }
+  .banner { position: relative; margin: 0 0 14px; border-radius: 10px; overflow: hidden; height: 300px; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .banner div { position: absolute; inset: 0; padding: 70px 36px; color: #fff;
+    background: linear-gradient(90deg, rgba(4,18,10,.92) 0%, rgba(4,18,10,.6) 45%, rgba(4,18,10,0) 75%); }
+  .banner h1 { color: #fff; font-size: 34pt; margin: 0; }
+  .banner p { color: #c6f576; font-size: 17pt; margin: 6px 0 0; font-weight: 600; }
+  .capa { border-left: 6px solid var(--lima); padding: 6px 0 6px 16px; margin-bottom: 14px; }
+  .capa p { margin: 2px 0; color: var(--suave); }
+  .capa .sub { font-size: 13pt; color: var(--tinta); }
+  .caixa { background: var(--fundo); border: 1px solid var(--linha); border-radius: 8px; padding: 8px 12px; margin: 8px 0;
+           break-inside: avoid; }
+  .regra { border: 1px solid var(--linha); border-left: 5px solid var(--verde); border-radius: 6px; padding: 6px 10px;
+           margin: 8px 0; break-inside: avoid; }
+  .regra b.id { color: var(--verde); }
+  .bool { font-family: Menlo, Consolas, monospace; font-size: 8.8pt; background: #fff; display: block; padding: 4px 0; }
+  .op { color: #a1430f; font-weight: 700; }
+  .sim { color: #1f7a3a; font-weight: 700; } .nao { color: #9a2a1d; font-weight: 700; }
+  figure { margin: 10px 0; break-inside: avoid; text-align: center; }
+  figure img { max-width: 100%; border: 1px solid var(--linha); border-radius: 6px; }
+  figcaption { font-size: 8.4pt; color: var(--suave); margin-top: 3px; }
+  .quebra { break-before: page; }
+  .sev { padding: 0 5px; border-radius: 3px; color: #fff; font-size: 8pt; font-weight: 700; }
+  .s-c { background: var(--critica); } .s-a { background: var(--alta); } .s-m { background: var(--media); } .s-i { background: var(--info); }
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  small { color: var(--suave); }
+</style>
+</head>
+<body>
+
+<div class="banner"><img src="capa_fase3.jpg" alt=""><div><h1>AgroSmart · Fase 3</h1><p>Inteligência no Campo</p></div></div>
+<div class="capa">
+  <h1 style="display:none">AgroSmart · Fase 3</h1>
+  <p class="sub"><b>Inteligência no Campo</b>: regras de decisão, automação e entrada automatizada de dados</p>
+  <p><b>Grupo:</b> Camila Grossi Gomes · Felipe Casquet Ferreira · Leonardo Rodrigues Amzehnhoff · Lucas Henrique Claro Ribeiro · Paulo Sergio Morais Gonçalves</p>
+  <p>FIAP · Sprint 3 · novembro de 2026</p>
+  <p>Repositório: github.com/FIAP-2025-GROUP/AgroSmart · código em <code>src/automacao/</code>, <code>ferramentas/</code>, <code>web/automacao.*</code></p>
+</div>
+
+<div class="caixa">
+  <b>Resumo.</b> Nas Fases 1 e 2 o AgroSmart diagnosticava plantas por foto (CNN + Gemini) e consolidava os laudos num
+  painel analítico. A Fase 3 transforma esses dados em <b>resposta automática</b>. Laudos de diagnóstico e leituras de
+  sensores de campo chegam a uma <b>pasta monitorada</b>. Um <b>monitor em micro-batch</b> lê somente o que ainda não
+  foi processado (checkpoint por arquivo e chave única por registro). <b>Cinco regras booleanas</b> (R1 a R5) avaliam
+  cada talhão e as <b>ações saem sozinhas</b>: arquivo de alerta, relatório de intervenção, plano de controle, e-mail ao
+  agrônomo, comando ao simulador de irrigação e recomendação no painel <code>/automacao</code>. Os 42 testes
+  automatizados da Fase 3 passam, junto com os 143 das fases anteriores (185 no total).
+</div>
+
+<h2>1. Visão do fluxo</h2>
+<figure>
+<svg viewBox="0 0 900 190" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial" font-size="12">
+  <defs><marker id="s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f6b3a"/></marker></defs>
+  <g fill="#f3f7f4" stroke="#1f6b3a" stroke-width="1.5">
+    <rect x="5" y="20" width="190" height="150" rx="10"/><rect x="235" y="20" width="200" height="150" rx="10"/>
+    <rect x="475" y="20" width="200" height="150" rx="10"/><rect x="715" y="20" width="180" height="150" rx="10"/>
+  </g>
+  <g fill="#1f6b3a" font-weight="700" font-size="14"><text x="20" y="44">1 · ORIGEM</text><text x="250" y="44">2 · INGESTÃO</text>
+    <text x="490" y="44">3 · PROCESSAMENTO</text><text x="730" y="44">4 · AÇÃO</text></g>
+  <g fill="#1d2a22">
+    <text x="20" y="68">App de diagnóstico (Fase 1)</text><text x="20" y="84">→ laudos_AAAA-MM-DD.jsonl</text>
+    <text x="20" y="108">Estações de campo</text><text x="20" y="124">→ sensores_AAAA-MM-DD.csv</text>
+    <text x="20" y="150" fill="#4d5f53" font-size="11">simulado: gerar_dados_fase3.py</text>
+    <text x="250" y="68">Pasta monitorada dados/entrada/</text><text x="250" y="86">Varredura a cada N s</text>
+    <text x="250" y="104">Checkpoint: bytes e linhas lidas</text><text x="250" y="122">Chave única: id do registro</text>
+    <text x="250" y="140">Validação → rejeitados</text><text x="250" y="158" fill="#4d5f53" font-size="11">SQLite: laudos, leituras, lotes</text>
+    <text x="490" y="68">Regras R1 a R5 (AND, OR, NOT)</text><text x="490" y="86">Só talhões/dias afetados</text>
+    <text x="490" y="104">Tempo do evento (janelas)</text><text x="490" y="122">Deduplicação de alertas</text>
+    <text x="490" y="140">Carência (NOT alerta recente)</text><text x="490" y="158" fill="#4d5f53" font-size="11">SQLite: alertas, ações (outbox)</text>
+    <text x="730" y="68">Arquivo de alerta (.json/.csv)</text><text x="730" y="86">Relatório / plano (.md)</text>
+    <text x="730" y="104">E-mail (.eml ou SMTP)</text><text x="730" y="122">Simulador de irrigação</text>
+    <text x="730" y="140">Painel /automacao</text>
+  </g>
+  <g stroke="#1f6b3a" stroke-width="2" marker-end="url(#s)"><line x1="197" y1="95" x2="231" y2="95"/>
+    <line x1="437" y1="95" x2="471" y2="95"/><line x1="677" y1="95" x2="711" y2="95"/></g>
+</svg>
+<figcaption>Figura 1 — Origem → ingestão → processamento (regras) → ação.</figcaption>
+</figure>
+
+<h2>2. Lógica de decisão</h2>
+<p>As regras usam os dados das fases anteriores: os <b>laudos</b> (contrato 2.0.0 da Fase 2, com condição, diagnóstico
+normalizado e categoria doença/praga) e as <b>leituras de sensores</b> por talhão. Cada regra é uma função pura em
+<code>src/automacao/regras.py</code>. Os limites estão num único lugar, <code>contratos.LIMITES</code>. Toda regra tem um termo
+<b>NOT</b> de carência, que impede repetir o mesmo alerta enquanto o episódio continua.</p>
+
+<div class="regra"><b class="id">R1 · Alerta de infestação</b> <small>(laudos · janela de 7 dias · latência diária)</small>
+<span class="bool">SE análises_conclusivas_7d ≥ 5 <span class="op">AND</span> doentes_7d / análises_conclusivas_7d &gt; 30%
+<span class="op">AND NOT</span> alerta_R1_no_talhão_nos_últimos_7d<br>ENTÃO alerta <span class="sev s-a">ALTA</span> → arquivo de alerta + relatório de intervenção + e-mail</span>
+<small>Conta-se por <b>análise</b>, não por laudo: no modo comparação a mesma foto tem 2 laudos (CNN + VLM) e vale o laudo
+principal, com a mesma regra da Fase 2. Análises indeterminadas não entram no denominador. O mínimo de 5 evita que 1 doente em 2 fotos vire “50% de infestação”.</small></div>
+
+<div class="regra"><b class="id">R2 · Plano de controle por persistência</b> <small>(laudos · latência diária)</small>
+<span class="bool">SE P ∈ {doença, praga} <span class="op">AND</span> P diagnosticado em D <span class="op">AND</span> em D−1 <span class="op">AND</span> em D−2
+<span class="op">AND NOT</span> plano_para_P_no_talhão_nos_últimos_14d<br>ENTÃO <span class="sev s-a">ALTA</span> → plano de controle (.md) + e-mail</span>
+<small>É o “mesma praga 3 dias seguidos” do enunciado, aplicado por talhão e por problema (requeima e ácaro-rajado têm planos independentes).</small></div>
+
+<div class="regra"><b class="id">R3 · Simulador de irrigação (histerese)</b> <small>(sensores · latência de minutos)</small>
+<span class="bool">LIGAR SE umidade_solo &lt; 25% <span class="op">AND</span> chuva_24h &lt; 5 mm <span class="op">AND NOT</span> irrigação_ligada<br>
+DESLIGAR SE irrigação_ligada <span class="op">AND</span> (umidade_solo ≥ 35% <span class="op">OR</span> chuva_24h ≥ 5 mm)<br>
+CRÍTICO SE LIGAR <span class="op">AND</span> umidade_solo &lt; 15% → também e-mail</span>
+<small>Liga abaixo de 25% e desliga acima de 35%. Entre esses dois valores o estado se mantém (histerese), para a válvula não ficar abrindo e fechando a cada leitura.</small></div>
+
+<div class="regra"><b class="id">R4 · Risco climático de requeima</b> <small>(sensores · latência de horas)</small>
+<span class="bool">SE cultura ∈ {Tomate, Batata} <span class="op">AND</span> UR ≥ 90% <span class="op">AND</span> 10 °C ≤ T ≤ 25 °C nas 2 últimas leituras seguidas
+<span class="op">AND NOT</span> alerta_R4_nas_últimas_24h<br>ENTÃO <span class="sev s-m">MÉDIA</span> → alerta preventivo + recomendação no painel</span>
+<small>Antecipa a doença: o clima úmido e ameno favorece a <i>Phytophthora infestans</i> antes de os sintomas aparecerem nas fotos.</small></div>
+
+<div class="regra"><b class="id">R5 · Pragas na armadilha</b> <small>(sensores + laudos · latência de horas)</small>
+<span class="bool">SE (pragas ≥ 20 <span class="op">OR</span> (pragas ≥ 10 <span class="op">AND</span> laudo_de_praga_no_talhão_nos_últimos_3d))
+<span class="op">AND NOT</span> alerta_R5_nas_últimas_24h<br>ENTÃO alerta (<span class="sev s-a">ALTA</span> + e-mail se ≥ 20; senão <span class="sev s-m">MÉDIA</span>)</span>
+<small>Cruza as duas fontes: uma contagem moderada só vira alerta quando a foto confirma praga no mesmo talhão.</small></div>
+
+<h3>2.1 Tabela de decisão (casos de borda, todos cobertos por testes)</h3>
+<table>
+<tr><th>Regra</th><th>Entrada</th><th>Avaliação booleana</th><th>Dispara?</th></tr>
+<tr><td>R1</td><td>4 análises, 2 doentes</td><td>4 ≥ 5 = F</td><td class="nao">não</td></tr>
+<tr><td>R1</td><td>10 análises, 3 doentes (30%)</td><td>V AND (30% &gt; 30% = F)</td><td class="nao">não</td></tr>
+<tr><td>R1</td><td>10 análises, 4 doentes (40%)</td><td>V AND V AND NOT F</td><td class="sim">sim</td></tr>
+<tr><td>R1</td><td>idem, com alerta R1 há 2 dias</td><td>V AND V AND NOT V</td><td class="nao">não</td></tr>
+<tr><td>R2</td><td>requeima em 28, 29 e 30/10</td><td>V AND V AND V AND NOT F</td><td class="sim">sim</td></tr>
+<tr><td>R2</td><td>requeima em 27, 29 e 30/10</td><td>D−1 V, D−2 F</td><td class="nao">não</td></tr>
+<tr><td>R3</td><td>solo 24%, chuva 0, desligada</td><td>V AND V AND NOT F</td><td class="sim">liga</td></tr>
+<tr><td>R3</td><td>solo 14%, chuva 0, desligada</td><td>LIGAR AND 14 &lt; 15</td><td class="sim">liga (crítico)</td></tr>
+<tr><td>R3</td><td>solo 24%, chuva 6 mm, desligada</td><td>V AND F</td><td class="nao">não</td></tr>
+<tr><td>R3</td><td>solo 30%, ligada</td><td>V AND (F OR F)</td><td class="nao">mantém</td></tr>
+<tr><td>R3</td><td>solo 28%, chuva 5 mm, ligada</td><td>V AND (F OR V)</td><td class="sim">desliga</td></tr>
+<tr><td>R4</td><td>UR 93%/T 18 °C só na leitura atual</td><td>2 leituras seguidas = F</td><td class="nao">não</td></tr>
+<tr><td>R4</td><td>Milho com UR 93% e T 18 °C</td><td>cultura ∈ {Tomate, Batata} = F</td><td class="nao">não</td></tr>
+<tr><td>R5</td><td>12 insetos, sem laudo de praga</td><td>F OR (V AND F)</td><td class="nao">não</td></tr>
+<tr><td>R5</td><td>12 insetos, ácaro-rajado em laudo</td><td>F OR (V AND V)</td><td class="sim">sim (média)</td></tr>
+<tr><td>R5</td><td>20 insetos</td><td>V OR …</td><td class="sim">sim (alta + e-mail)</td></tr>
+</table>
+
+<h3>2.2 Fluxograma de um ciclo do monitor</h3>
+<figure>
+<svg viewBox="0 0 760 640" width="88%" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Helvetica, Arial" font-size="12.5">
+  <defs><marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1d2a22"/></marker></defs>
+  <g stroke="#1d2a22" stroke-width="1.4" fill="none" marker-end="url(#f)">
+    <line x1="300" y1="50" x2="300" y2="74"/><line x1="300" y1="134" x2="300" y2="160"/>
+    <path d="M410 104 H560 V40 H372"/>
+    <line x1="300" y1="200" x2="300" y2="226"/><path d="M410 256 H520"/>
+    <line x1="300" y1="286" x2="300" y2="312"/><path d="M410 342 H520"/>
+    <line x1="300" y1="372" x2="300" y2="396"/><line x1="300" y1="436" x2="300" y2="462"/>
+    <path d="M410 492 H520"/><line x1="300" y1="522" x2="300" y2="546"/>
+    <line x1="300" y1="586" x2="300" y2="606"/>
+    <path d="M190 626 H40 V24 H226"/>
+  </g>
+  <g stroke="#1f6b3a" stroke-width="1.5">
+    <rect x="228" y="12" width="144" height="38" rx="19" fill="#e6f2d6"/>
+    <polygon points="300,74 410,104 300,134 190,104" fill="#fff5dc"/>
+    <rect x="190" y="160" width="220" height="40" rx="6" fill="#f3f7f4"/>
+    <polygon points="300,226 410,256 300,286 190,256" fill="#fff5dc"/>
+    <polygon points="300,312 410,342 300,372 190,342" fill="#fff5dc"/>
+    <rect x="190" y="396" width="220" height="40" rx="6" fill="#f3f7f4"/>
+    <polygon points="300,462 410,492 300,522 190,492" fill="#fff5dc"/>
+    <rect x="190" y="546" width="220" height="40" rx="6" fill="#f3f7f4"/>
+    <rect x="190" y="606" width="220" height="40" rx="6" fill="#f3f7f4"/>
+    <rect x="520" y="236" width="200" height="40" rx="6" fill="#fde8e4"/>
+    <rect x="520" y="322" width="200" height="40" rx="6" fill="#eef1f6"/>
+    <rect x="520" y="472" width="200" height="40" rx="6" fill="#eef1f6"/>
+  </g>
+  <g fill="#1d2a22" text-anchor="middle">
+    <text x="300" y="36" font-weight="700">Varredura (a cada N s)</text>
+    <text x="300" y="100">Arquivo novo ou com</text><text x="300" y="115">linhas novas completas?</text>
+    <text x="300" y="178">Ler SÓ as linhas após</text><text x="300" y="193">o checkpoint do arquivo</text>
+    <text x="300" y="260">Registro válido?</text>
+    <text x="300" y="338">Chave já gravada?</text><text x="300" y="353" font-size="10.5">(id_laudo / id_leitura)</text>
+    <text x="300" y="414">Grava registro + avança</text><text x="300" y="429">checkpoint (1 transação)</text>
+    <text x="300" y="488">Regra atendida AND</text><text x="300" y="503">NOT alerta recente?</text>
+    <text x="300" y="564">Grava alerta + ações</text><text x="300" y="579">pendentes (1 transação)</text>
+    <text x="300" y="624">Executa ações: alerta, relatório,</text><text x="300" y="639">irrigação, e-mail</text>
+    <text x="620" y="260">Rejeitado (com motivo)</text>
+    <text x="620" y="340">Já processado: ignora,</text><text x="620" y="354">NÃO dispara ação</text>
+    <text x="620" y="490">Sem ação</text><text x="620" y="504" font-size="10.5">(próximo talhão/dia)</text>
+  </g>
+  <g font-size="11" font-weight="700">
+    <text x="420" y="98" fill="#9a2a1d">não → aguarda</text><text x="306" y="150" fill="#1f7a3a">sim</text>
+    <text x="420" y="250" fill="#9a2a1d">não</text><text x="306" y="302" fill="#1f7a3a">sim</text>
+    <text x="420" y="336" fill="#9a2a1d">sim</text><text x="306" y="388" fill="#1f7a3a">não (novo)</text>
+    <text x="420" y="486" fill="#9a2a1d">não</text><text x="306" y="538" fill="#1f7a3a">sim</text>
+  </g>
+</svg>
+<figcaption>Figura 2 — Fluxograma de decisão de um ciclo (micro-batch). Só registros novos chegam às regras.</figcaption>
+</figure>
+
+<h3>2.3 Pseudocódigo</h3>
+<pre>a cada N segundos:
+  para cada arquivo em dados/entrada/ com bytes além do checkpoint:
+      linhas ← linhas completas após o checkpoint          # nunca relê o que já foi lido
+      para cada linha: SE inválida ENTÃO rejeitados
+                       SENÃO SE chave já existe ENTÃO ignora (duplicado)
+                       SENÃO grava como NOVO do lote
+      grava checkpoint                                       # mesma transação dos registros
+  para cada talhão/dia tocado por registros NOVOS:
+      SE R1 OR R2 OR R3 OR R4 OR R5 (cada uma com seu AND NOT carência) ENTÃO
+          grava alerta (chave única) + ações pendentes       # outbox
+  executa ações pendentes → marca executada</pre>
+
+<h2>3. Automação: ações executadas</h2>
+<table>
+<tr><th>Ação</th><th>Disparada por</th><th>Resultado (em <code>dados/fase3/saida/</code>)</th></tr>
+<tr><td>Arquivo de alerta</td><td>todas as regras</td><td><code>alertas/alerta_&lt;id&gt;_&lt;regra&gt;_&lt;local&gt;.json</code> + consolidado <code>alertas/alertas.csv</code> (abre no Excel)</td></tr>
+<tr><td>Relatório de intervenção</td><td>R1</td><td><code>relatorios/intervencao_….md</code>: situação, regra, evidências, checklist</td></tr>
+<tr><td>Plano de controle</td><td>R2</td><td><code>relatorios/plano_….md</code>: 5 passos (confirmar, aplicar manejo do catálogo, isolar, reavaliar, registrar)</td></tr>
+<tr><td>E-mail ao agrônomo</td><td>R1, R2, R3 crítico, R5 ≥ 20</td><td><code>emails/email_….eml</code> com o relatório anexo; enviado de verdade por SMTP se <code>AGROSMART_SMTP_HOST</code> estiver no <code>.env</code></td></tr>
+<tr><td>Simulador de irrigação</td><td>R3</td><td><code>irrigacao/comando_….json</code> (LIGAR/DESLIGAR) + estado da válvula por talhão no banco</td></tr>
+<tr><td>Recomendação no painel</td><td>todas</td><td><code>http://localhost:8000/automacao</code>: atualiza a cada 3 s, mostra talhões, irrigação, alertas e o conteúdo de cada ação</td></tr>
+</table>
+<p><b>Confiabilidade.</b> O alerta e suas ações nascem na mesma transação, com status <i>pendente</i> (padrão outbox),
+e só depois são executados. Se o processo cair no meio, as ações pendentes rodam no ciclo seguinte. Cada arquivo
+gerado é nomeado pelo id do alerta, então reexecutar sobrescreve em vez de duplicar. Uma ação que falha (SMTP fora do
+ar, por exemplo) fica como <i>falhou</i> e não derruba o monitor.</p>
+
+<figure><img src="evidencias/capturas/02_painel_topo_talhoes.png"><figcaption>Figura 3 — Painel /automacao: monitor ativo, contadores do micro-batch e recomendação vigente por talhão.</figcaption></figure>
+<div class="duas">
+<figure><img src="evidencias/capturas/07_irrigacao_ligada_dia6.png"><figcaption>Figura 4 — Dia 6: irrigação do T01 LIGADA em nível crítico (14,6%).</figcaption></figure>
+<figure><img src="evidencias/capturas/03_email_alerta_infestacao_R1.png"><figcaption>Figura 5 — E-mail gerado pelo R1, com o relatório anexo.</figcaption></figure>
+</div>
+<figure><img src="evidencias/capturas/04_relatorio_intervencao_R1.png" style="max-width:80%"><figcaption>Figura 6 — Relatório de intervenção gerado automaticamente.</figcaption></figure>
+
+<div class="quebra"></div>
+<h2>4. Integração com dados (entrada automatizada)</h2>
+
+<h3>4.1 Modelo escolhido: micro-batch com pasta monitorada e checkpoint</h3>
+<p>Escolhemos o <b>micro-batch</b> porque a latência que as regras pedem é compatível com ele. R1 e R2 trabalham em
+janelas de <b>dias</b>: “30% de doentes em 7 dias” e “3 dias seguidos” não ganham nada com tempo real, já que o dado de
+origem (fotos tiradas pelo produtor) chega em lotes ao longo do dia. R4 e R5 olham tendência em <b>horas</b>. A regra mais
+exigente é a R3 (umidade crítica do solo), que precisa reagir em <b>minutos</b>. Com varredura a cada 5 s (configurável), a
+latência máxima é o intervalo de varredura mais alguns milissegundos de processamento (2 s na execução da evidência),
+bem abaixo do tempo em que o solo seca de forma relevante.</p>
+<p>O micro-batch também é o modelo que cabe na realidade do campo: estações e celulares sem conexão contínua
+descarregam arquivos quando conseguem, e cada arquivo pode chegar atrasado ou repetido. A pasta monitorada com
+checkpoint resolve isso sem infraestrutura extra (só Python e SQLite) e roda em qualquer máquina do avaliador. O
+<b>streaming com Kafka</b> passa a valer a pena com milhares de sensores enviando eventos contínuos ou quando várias
+aplicações consomem o mesmo fluxo. As regras são funções puras sobre registros, então trocar a camada de ingestão
+por um consumer Kafka não exige mudar a lógica de decisão.</p>
+
+<h3>4.2 Como o sistema sabe o que já foi processado</h3>
+<table>
+<tr><th>Mecanismo</th><th>O que garante</th></tr>
+<tr><td>Checkpoint por arquivo (<code>arquivos</code>: bytes e linhas lidas + SHA-256 do trecho lido)</td><td>Arquivo que cresce é lido só do ponto onde parou. Arquivo igual é ignorado. Arquivo reescrito é detectado e relido.</td></tr>
+<tr><td>Só linhas completas (terminadas em quebra de linha)</td><td>Uma linha que o produtor ainda está escrevendo fica para o próximo ciclo.</td></tr>
+<tr><td>Chave única por registro (<code>id_laudo</code> com a origem; <code>id_leitura</code>)</td><td>O mesmo dado entregue de novo, em outro arquivo, é contado como “já processado” e não dispara ação.</td></tr>
+<tr><td>Registros + checkpoint na mesma transação</td><td>Uma queda no meio não deixa o checkpoint à frente dos dados nem o contrário.</td></tr>
+<tr><td>Lote sem <code>concluido_em</code> é reavaliado</td><td>Queda entre a ingestão e as regras não perde alerta; a chave do alerta impede duplicata.</td></tr>
+<tr><td>Escrita atômica do produtor (<code>.nome.tmp</code> → renomeia)</td><td>O monitor nunca vê um arquivo novo pela metade.</td></tr>
+</table>
+
+<h3>4.3 Dicionário de dados</h3>
+<p><b>Leitura de sensor</b>: <code>sensores_*.csv</code> (separador <code>,</code> e decimal <code>.</code>; também aceita <code>;</code> com decimal <code>,</code>, padrão do Excel PT-BR) ou <code>sensores_*.jsonl</code>.</p>
+<table>
+<tr><th>Campo</th><th>Tipo</th><th>Unidade</th><th>Obrig.</th><th>Faixa válida</th><th>Exemplo</th></tr>
+<tr><td>id_leitura</td><td>texto</td><td>—</td><td>sim</td><td>único</td><td>sns-est-sbe-T01-20261031T0600</td></tr>
+<tr><td>instante</td><td>texto ISO-8601</td><td>data/hora com fuso</td><td>sim</td><td>sem fuso = Brasília</td><td>2026-10-31T06:00:00-03:00</td></tr>
+<tr><td>id_sensor</td><td>texto</td><td>—</td><td>sim</td><td></td><td>est-sbe-T01</td></tr>
+<tr><td>uf, municipio</td><td>texto</td><td>—</td><td>não</td><td></td><td>SP, Campinas</td></tr>
+<tr><td>propriedade, talhao</td><td>texto</td><td>—</td><td>sim</td><td></td><td>Sítio Boa Esperança, T01</td></tr>
+<tr><td>cultura</td><td>texto</td><td>—</td><td>sim</td><td>normalizada por sinônimo</td><td>Batata</td></tr>
+<tr><td>umidade_solo_pct</td><td>decimal</td><td>% volumétrica</td><td>sim</td><td>0 a 100</td><td>14.6</td></tr>
+<tr><td>temperatura_c</td><td>decimal</td><td>°C</td><td>sim</td><td>−10 a 55</td><td>22.4</td></tr>
+<tr><td>umidade_ar_pct</td><td>decimal</td><td>% UR</td><td>sim</td><td>0 a 100</td><td>41</td></tr>
+<tr><td>chuva_mm</td><td>decimal</td><td>mm desde a leitura anterior</td><td>sim</td><td>0 a 300</td><td>0</td></tr>
+<tr><td>pragas_armadilha</td><td>inteiro</td><td>insetos/armadilha</td><td>sim</td><td>0 a 10 000</td><td>3</td></tr>
+</table>
+<p><b>Laudo de diagnóstico</b>: <code>laudos_*.jsonl</code>, no mesmo contrato 2.0.0 da Fase 2 (30 campos, documentados em
+<code>docs/fase2_dados_e_execucao.md</code>). Campos usados pelas regras:</p>
+<table>
+<tr><th>Campo</th><th>Tipo</th><th>Uso</th><th>Exemplo</th></tr>
+<tr><td>id_laudo / id_analise</td><td>texto</td><td>chave única / agrupa CNN + VLM da mesma foto</td><td>f3-ld-20261029-T02-003</td></tr>
+<tr><td>data_analise</td><td>texto ISO-8601</td><td>dia do evento (janelas de R1, R2, R5)</td><td>2026-10-29T10:41:07-03:00</td></tr>
+<tr><td>propriedade, talhao</td><td>texto</td><td>agrupamento por talhão</td><td>Sítio Boa Esperança, T02</td></tr>
+<tr><td>condicao</td><td>texto</td><td>saudável / doente / indeterminado</td><td>doente</td></tr>
+<tr><td>diagnostico_original → normalizado</td><td>texto</td><td>problema P da R2 (“Míldio tardio” vira Requeima)</td><td>Requeima</td></tr>
+<tr><td>categoria (derivada)</td><td>texto</td><td>doença / praga (R2, R5)</td><td>doenca</td></tr>
+<tr><td>motor, confianca</td><td>texto, decimal 0–1</td><td>laudo principal (CNN conclusivo primeiro)</td><td>CNN especializado, 0.912</td></tr>
+<tr><td>manejo</td><td>texto</td><td>recomendação do relatório e do e-mail</td><td>“eliminar plantas afetadas…”</td></tr>
+</table>
+<p><b>Exemplo de registro (linha do CSV de sensores):</b></p>
+<pre>id_leitura,instante,id_sensor,uf,municipio,propriedade,talhao,cultura,umidade_solo_pct,temperatura_c,umidade_ar_pct,chuva_mm,pragas_armadilha
+sns-est-sbe-T01-20261031T0600,2026-10-31T06:00:00-03:00,est-sbe-T01,SP,Campinas,Sítio Boa Esperança,T01,Batata,14.6,22.4,41,0,3</pre>
+<p><b>Exemplo de alerta gerado</b> (<code>saida/alertas/alerta_000008_R3_….json</code>, resumido):</p>
+<pre>{"id": 8, "regra": "R3", "severidade": "critica", "titulo": "Irrigação LIGADA — Sítio Boa Esperança / talhão T01",
+ "mensagem": "Umidade do solo em 14.6% (limite 25%) e 0.0 mm de chuva nas últimas 24 h: irrigação acionada. Nível crítico de umidade.",
+ "instante_evento": "2026-10-31T06:00:00-03:00", "evidencias": {"umidade_solo_pct": 14.6, "chuva_24h_mm": 0.0, "estava_ligada": false}}</pre>
+
+<h3>4.4 Cenário de demonstração (simulado e determinístico)</h3>
+<p><code>ferramentas/gerar_dados_fase3.py</code> publica 7 dias (26/10 a 01/11/2026) de 4 talhões, montados para
+exercitar cada regra. Com <code>--continuo</code>, publica os laudos do dia e depois <b>acrescenta</b> ao mesmo CSV as
+leituras de 06h, 12h e 18h, o que exercita o checkpoint de arquivo que cresce. Com <code>--reenviar N</code>, entrega de
+novo o dia N com outro nome. Com <code>--fase2</code>, reaproveita os laudos simulados da Fase 2. Os dados não
+representam nenhuma lavoura real.</p>
+<table>
+<tr><th>Dia</th><th>Talhão</th><th>O que chega</th><th>Resposta do sistema</th></tr>
+<tr><td>27/10</td><td>T02 Tomate</td><td>UR 93% e 91% com 17 a 21 °C</td><td>R4 <span class="sev s-m">MÉDIA</span>: risco de requeima</td></tr>
+<tr><td>28/10</td><td>T01 Batata</td><td>solo 24,1%, sem chuva</td><td>R3: irrigação LIGADA</td></tr>
+<tr><td>28/10</td><td>Gleba 2 Milho</td><td>sensor marca 140% de umidade</td><td>linha rejeitada (fora da faixa)</td></tr>
+<tr><td>29/10</td><td>T02 Tomate</td><td>7 de 22 análises doentes (32%)</td><td>R1 <span class="sev s-a">ALTA</span>: relatório + e-mail</td></tr>
+<tr><td>29/10</td><td>T01 Batata</td><td>solo 36,2%</td><td>R3: irrigação DESLIGADA</td></tr>
+<tr><td>30/10</td><td>T02 / T03</td><td>requeima no 3º dia seguido; 12 insetos + laudo de ácaro</td><td>R2 plano de controle + e-mail; R5 <span class="sev s-m">MÉDIA</span></td></tr>
+<tr><td>31/10</td><td>T01 / T03</td><td>solo 14,6%; ácaro no 3º dia; 21 insetos</td><td>R3 <span class="sev s-c">CRÍTICA</span> + e-mail; R2 plano; R5 <span class="sev s-a">ALTA</span> + e-mail</td></tr>
+<tr><td>01/11</td><td>T01 Batata</td><td>12,4 mm de chuva</td><td>R3: irrigação DESLIGADA (chuva)</td></tr>
+<tr><td>—</td><td>Gleba 2 Milho</td><td>tudo normal (grupo de controle)</td><td>nenhum alerta, como esperado</td></tr>
+<tr><td>reenvio</td><td>dia 29/10 de novo</td><td>31 registros já processados</td><td><b>nenhuma ação</b></td></tr>
+</table>
+<p>Total: 200 registros processados, 2 rejeitados, 31 duplicados ignorados, 12 alertas (R1 1, R2 2, R3 4, R4 2,
+R5 3), 24 ações executadas (5 e-mails, 3 relatórios, 4 comandos de irrigação, 12 arquivos de alerta).</p>
+
+<h3>4.5 Evidência de execução</h3>
+<p>O log completo está em <code>docs/fase3/evidencias/execucao_monitor.log</code> e a saída do produtor em
+<code>execucao_gerador.log</code>. Os trechos abaixo mostram dados novos chegando, sendo processados e gerando ação. Mostram
+também que o reenvio e o reinício do monitor <b>não</b> disparam nada de novo.</p>
+<figure><img src="evidencias/capturas/08_log_dados_novos_e_acoes.png"><figcaption>Figura 7 — Lote 13: laudos novos de 29/10 → R1 → relatório e e-mail. Lotes 14 a 16: leituras acrescentadas ao mesmo CSV, lidas 4 de cada vez.</figcaption></figure>
+<figure><img src="evidencias/capturas/09_log_reenvio_e_reinicio_sem_acao.png"><figcaption>Figura 8 — Lote 29: o reenvio do dia 29/10 tem 0 registros novos e 31 já processados, sem ação. Depois do reinício, o checkpoint persistido impede reprocessar.</figcaption></figure>
+
+<h2>5. Como executar</h2>
+<pre>py -3.12 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+# terminal 1 — monitor (fica rodando, sem intervenção)
+.venv\Scripts\python.exe ferramentas\monitor_fase3.py --reiniciar
+# terminal 2 — painel
+.venv\Scripts\python.exe servidor.py            → http://localhost:8000/automacao
+# terminal 3 — chegada de dados
+.venv\Scripts\python.exe ferramentas\gerar_dados_fase3.py --continuo --intervalo 6
+.venv\Scripts\python.exe ferramentas\gerar_dados_fase3.py --reenviar 4      # prova de não-reprocessamento
+# testes
+.venv\Scripts\python.exe -m pytest testes\test_automacao.py</pre>
+
+<h2>6. Limitações</h2>
+<ul>
+<li>Os dados do cenário são <b>simulados</b>. Os limites das regras (30%, 25%/35% de umidade, 20 insetos) são valores
+didáticos plausíveis e precisam ser calibrados com o agrônomo para cada cultura e tipo de solo.</li>
+<li>O e-mail fica na caixa de saída (<code>.eml</code>) até alguém configurar o SMTP no <code>.env</code>. O envio real
+foi testado com um servidor SMTP simulado nos testes automatizados.</li>
+<li>A R3 processa as leituras em ordem de tempo dentro de cada lote. Uma leitura atrasada, mais antiga que o
+último comando enviado à válvula, é ignorada pela R3 e não reverte esse comando.</li>
+<li>A R5 é avaliada quando a <b>leitura</b> chega. Um laudo de praga que chega depois não reavalia leituras antigas;
+a próxima leitura do talhão já o considera.</li>
+<li>Robustez: um erro num ciclo (arquivo travado pelo Excel, por exemplo) é registrado no log e o monitor segue no
+ciclo seguinte. Uma falha de SMTP é tentada de novo até 3 vezes. Se dois monitores forem abertos por engano, cada ação
+é reservada por um só processo, então nenhum e-mail sai em duplicidade.</li>
+<li>Assim como nas fases anteriores, o diagnóstico por imagem é uma triagem: a aplicação de defensivo exige
+engenheiro agrônomo.</li>
+</ul>
+</body>
+</html>
