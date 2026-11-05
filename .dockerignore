@@ -1,0 +1,14 @@
+.venv/
+.git/
+.claude/
+__pycache__/
+*.pyc
+.env
+entrega/
+relatorio/
+notebooks/
+testes/
+docs/
+dados/historico.db
+exportacoes/*.csv
+exportacoes/*.json
